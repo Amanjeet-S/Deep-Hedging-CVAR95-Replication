@@ -1,0 +1,29 @@
+{
+  "price": 2.7700684349135973,
+  "standard_error": 0.0029763686932246726,
+  "paths": 2000000,
+  "put_price": 2.765089141916335,
+  "parity_term": 0.004979292997262519,
+  "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+  "bound_stats": {
+    "lower": 0.0,
+    "upper": 99.5833703196339,
+    "sample_min": 0.0,
+    "sample_max": 99.5833703196339,
+    "violations": 0
+  },
+  "antithetic_pairs": 1000000,
+  "discounted_dividend_stock_mean": 100.0002181721257,
+  "final_period_integrated_analytically": true,
+  "simulated_periods": 62,
+  "absorbed_numerically_zero_stock_paths": 1,
+  "paths_dropped": 0,
+  "variance_clipped": false,
+  "max_live_variance": 5022.636133893306,
+  "confidence_interval_95": [
+    2.764234752274877,
+    2.7759021175523175
+  ],
+  "seed": 46,
+  "method": "62 simulated Q periods plus exact final one-period conditional Gaussian put, antithetic1millionpairs, put-call parity"
+}

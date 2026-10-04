@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+*.aux
+*.log
+*.out
+*.synctex.gz
+delta_grid*.npz
+retrained95/
+recalibration.json
+rerun-price-audit.json
+.DS_Store

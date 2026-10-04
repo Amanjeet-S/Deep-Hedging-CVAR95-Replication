@@ -1,0 +1,289 @@
+{
+  "purpose": "Initial-state/rounding price sensitivity; illustrative scenarios are not recovered original calibration",
+  "method": "Paper Q dynamics:62 simulated periods plus exact final one-period conditional Gaussian put; put-call parity;1million antithetic pairs at default2million paths",
+  "guard": "A path is absorbed only when actual float64 exp(logspot)==0, and receives the full discounted-strike put contribution. No path is dropped and no positive variance is clipped.",
+  "rates": {
+    "r": 0.0167,
+    "q": 0.0165
+  },
+  "S0": 100,
+  "K": 100,
+  "T_days": 63,
+  "source": "calibration.json",
+  "illustrative_state_warning": "7.75e-5 was selected after the initial-state bracket solely to demonstrate an attainable callprice; it is not an observed fitted variance or a recovered original parameter.",
+  "scenarios": [
+    {
+      "price": 2.7700684349135973,
+      "standard_error": 0.0029763686932246726,
+      "paths": 2000000,
+      "put_price": 2.765089141916335,
+      "parity_term": 0.004979292997262519,
+      "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+      "bound_stats": {
+        "lower": 0.0,
+        "upper": 99.5833703196339,
+        "sample_min": 0.0,
+        "sample_max": 99.5833703196339,
+        "violations": 0
+      },
+      "antithetic_pairs": 1000000,
+      "discounted_dividend_stock_mean": 100.0002181721257,
+      "final_period_integrated_analytically": true,
+      "simulated_periods": 62,
+      "absorbed_numerically_zero_stock_paths": 1,
+      "paths_dropped": 0,
+      "variance_clipped": false,
+      "max_live_variance": 5022.636133893306,
+      "label": "source_coeffs_h0_multiple_1",
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315
+      },
+      "first_return_conditional_variance": 2.6083121124996644e-05,
+      "standard_error_antithetic_pairs": 0.0029763686932246726,
+      "ci95": [
+        2.764234752274877,
+        2.7759021175523175
+      ],
+      "seed": 46,
+      "price_3p16_in_ci95": false
+    },
+    {
+      "price": 2.9781635150011034,
+      "standard_error": 0.003224264629122184,
+      "paths": 2000000,
+      "put_price": 2.973184222003841,
+      "parity_term": 0.004979292997262519,
+      "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+      "bound_stats": {
+        "lower": 0.0,
+        "upper": 99.5833703196339,
+        "sample_min": 0.0,
+        "sample_max": 99.5833703196339,
+        "violations": 0
+      },
+      "antithetic_pairs": 1000000,
+      "discounted_dividend_stock_mean": 100.00032319077572,
+      "final_period_integrated_analytically": true,
+      "simulated_periods": 62,
+      "absorbed_numerically_zero_stock_paths": 1,
+      "paths_dropped": 0,
+      "variance_clipped": false,
+      "max_live_variance": 5180.608462486613,
+      "label": "source_coeffs_h0_multiple_2",
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315
+      },
+      "first_return_conditional_variance": 5.216624224999329e-05,
+      "standard_error_antithetic_pairs": 0.003224264629122184,
+      "ci95": [
+        2.971843956328024,
+        2.9844830736741828
+      ],
+      "seed": 46,
+      "price_3p16_in_ci95": false
+    },
+    {
+      "price": 3.1660039447814596,
+      "standard_error": 0.003446976493133198,
+      "paths": 2000000,
+      "put_price": 3.161024651784197,
+      "parity_term": 0.004979292997262519,
+      "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+      "bound_stats": {
+        "lower": 0.0,
+        "upper": 99.5833703196339,
+        "sample_min": 0.0,
+        "sample_max": 99.5833703196339,
+        "violations": 0
+      },
+      "antithetic_pairs": 1000000,
+      "discounted_dividend_stock_mean": 100.00039245956148,
+      "final_period_integrated_analytically": true,
+      "simulated_periods": 62,
+      "absorbed_numerically_zero_stock_paths": 2,
+      "paths_dropped": 0,
+      "variance_clipped": false,
+      "max_live_variance": 56612.06718828754,
+      "label": "source_coeffs_h0_multiple_3",
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315
+      },
+      "first_return_conditional_variance": 7.824936337498993e-05,
+      "standard_error_antithetic_pairs": 0.003446976493133198,
+      "ci95": [
+        3.1592478708549185,
+        3.1727600187080007
+      ],
+      "seed": 46,
+      "price_3p16_in_ci95": true
+    },
+    {
+      "price": 3.339454678490107,
+      "standard_error": 0.003650167542153637,
+      "paths": 2000000,
+      "put_price": 3.3344753854928446,
+      "parity_term": 0.004979292997262519,
+      "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+      "bound_stats": {
+        "lower": 0.0,
+        "upper": 99.5833703196339,
+        "sample_min": 0.0,
+        "sample_max": 99.5833703196339,
+        "violations": 0
+      },
+      "antithetic_pairs": 1000000,
+      "discounted_dividend_stock_mean": 100.00044221410847,
+      "final_period_integrated_analytically": true,
+      "simulated_periods": 62,
+      "absorbed_numerically_zero_stock_paths": 2,
+      "paths_dropped": 0,
+      "variance_clipped": false,
+      "max_live_variance": 91198.36525422745,
+      "label": "source_coeffs_h0_multiple_4",
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315
+      },
+      "first_return_conditional_variance": 0.00010433248449998657,
+      "standard_error_antithetic_pairs": 0.003650167542153637,
+      "ci95": [
+        3.332300350107486,
+        3.346609006872728
+      ],
+      "seed": 46,
+      "price_3p16_in_ci95": false
+    },
+    {
+      "price": 3.1515782593059223,
+      "standard_error": 0.003536116356086727,
+      "paths": 2000000,
+      "put_price": 3.1465989663086598,
+      "parity_term": 0.004979292997262519,
+      "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+      "bound_stats": {
+        "lower": 0.0,
+        "upper": 99.5833703196339,
+        "sample_min": 0.0,
+        "sample_max": 99.5833703196339,
+        "violations": 0
+      },
+      "antithetic_pairs": 1000000,
+      "discounted_dividend_stock_mean": 100.00043561622766,
+      "final_period_integrated_analytically": true,
+      "simulated_periods": 62,
+      "absorbed_numerically_zero_stock_paths": 3,
+      "paths_dropped": 0,
+      "variance_clipped": false,
+      "max_live_variance": 6320.018205248652,
+      "label": "rounding_witness_half_upper_interval",
+      "parameters": {
+        "mu": 0.000625,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1125,
+        "gamma": 0.2025,
+        "beta": 0.7825
+      },
+      "first_return_conditional_variance": 2.6083121124996644e-05,
+      "standard_error_antithetic_pairs": 0.003536116356086727,
+      "ci95": [
+        3.144647471247992,
+        3.1585090473638524
+      ],
+      "seed": 46,
+      "price_3p16_in_ci95": false
+    },
+    {
+      "price": 3.1608278778665615,
+      "standard_error": 0.00344087185313589,
+      "paths": 2000000,
+      "put_price": 3.155848584869299,
+      "parity_term": 0.004979292997262519,
+      "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+      "bound_stats": {
+        "lower": 0.0,
+        "upper": 99.5833703196339,
+        "sample_min": 0.0,
+        "sample_max": 99.5833703196339,
+        "violations": 0
+      },
+      "antithetic_pairs": 1000000,
+      "discounted_dividend_stock_mean": 100.00039079012689,
+      "final_period_integrated_analytically": true,
+      "simulated_periods": 62,
+      "absorbed_numerically_zero_stock_paths": 2,
+      "paths_dropped": 0,
+      "variance_clipped": false,
+      "max_live_variance": 24950.281206740416,
+      "label": "illustrative_unreported_initial_variance_7p75e_minus5",
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315
+      },
+      "first_return_conditional_variance": 7.75e-05,
+      "standard_error_antithetic_pairs": 0.00344087185313589,
+      "ci95": [
+        3.1540837690344152,
+        3.1675719866987078
+      ],
+      "seed": 46,
+      "price_3p16_in_ci95": true
+    },
+    {
+      "price": 3.161292100982567,
+      "standard_error": 0.0034402025551092817,
+      "paths": 2000000,
+      "put_price": 3.1563128079853047,
+      "parity_term": 0.004979292997262519,
+      "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+      "bound_stats": {
+        "lower": 0.0,
+        "upper": 99.5833703196339,
+        "sample_min": 0.0,
+        "sample_max": 99.58332705267489,
+        "violations": 0
+      },
+      "antithetic_pairs": 1000000,
+      "discounted_dividend_stock_mean": 100.00130313248275,
+      "final_period_integrated_analytically": true,
+      "simulated_periods": 62,
+      "absorbed_numerically_zero_stock_paths": 0,
+      "paths_dropped": 0,
+      "variance_clipped": false,
+      "max_live_variance": 4.643295107749845,
+      "label": "illustrative_unreported_initial_variance_7p75e_minus5",
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315
+      },
+      "first_return_conditional_variance": 7.75e-05,
+      "standard_error_antithetic_pairs": 0.0034402025551092817,
+      "ci95": [
+        3.154549303974553,
+        3.1680348979905815
+      ],
+      "seed": 47,
+      "price_3p16_in_ci95": true
+    }
+  ]
+}

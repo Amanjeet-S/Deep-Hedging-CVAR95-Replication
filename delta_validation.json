@@ -1,0 +1,397 @@
+{
+  "method": "Equation (9), evaluated through its exact stock-numeraire representation, Gaussian quadrature and bilinear interpolation. Terminal one-day delta is integrated analytically.",
+  "stock_numeraire_identity": "Delta=e^(-q*tau/252) P^S(ST>K); innovation under the stock measure is z=sqrt(h)+N(0,1). Variance transition remains that of footnote3.",
+  "diagnostics": {
+    "method": "stock-numeraire Gaussian quadrature with bilinear interpolation",
+    "params": {
+      "mu": 0.0006252906867408154,
+      "omega": 2.965710904850983e-06,
+      "alpha": 0.1000004458628082,
+      "beta": 0.7799996137183315,
+      "gamma": 0.19999943438148582,
+      "r": 0.0167,
+      "q": 0.0165,
+      "trading_days": 252
+    },
+    "config": {
+      "x_min": -1.5,
+      "x_max": 1.5,
+      "nx": 4801,
+      "logh_min": -12,
+      "logh_max": -1,
+      "nh": 221,
+      "quadrature_nodes": 48,
+      "dtype": "float32"
+    },
+    "build_seconds": 213.6109232500021,
+    "evaluations": 8,
+    "variance_clamps": 0,
+    "moneyness_clamps": 0,
+    "probability_min": 0.0,
+    "probability_max": 1.0,
+    "monotonicity_min_diff": 0.0
+  },
+  "conditional_mc_checks": [
+    {
+      "tau": 63,
+      "S": 100,
+      "h": 2.6666335467727468e-05,
+      "grid_delta": 0.5640124055572894,
+      "estimate": 0.5649747276485024,
+      "standard_error": 0.0006497623167743898,
+      "n_paths": 500000,
+      "seed": 4307,
+      "stock_measure": true,
+      "grid_minus_mc": -0.0009623220912130526,
+      "difference_in_mc_standard_errors": -1.4810370905938357,
+      "final_grid_delta": 0.5651404962821638,
+      "final_grid_minus_mc": 0.0001657686336613562,
+      "final_difference_in_mc_standard_errors": 0.2551219567245453,
+      "component": "fine grid"
+    },
+    {
+      "tau": 31,
+      "S": 95,
+      "h": 4e-05,
+      "grid_delta": 0.11514850098680779,
+      "estimate": 0.11159937081714269,
+      "standard_error": 0.00039377833234212307,
+      "n_paths": 500000,
+      "seed": 4308,
+      "stock_measure": true,
+      "grid_minus_mc": 0.003549130169665099,
+      "difference_in_mc_standard_errors": 9.013015390043194,
+      "final_grid_delta": 0.11215140388565396,
+      "final_grid_minus_mc": 0.0005520330685112734,
+      "final_difference_in_mc_standard_errors": 1.4018878723668706,
+      "component": "fine grid"
+    },
+    {
+      "tau": 10,
+      "S": 105,
+      "h": 0.00015,
+      "grid_delta": 0.9065040081472187,
+      "estimate": 0.9069772300691915,
+      "standard_error": 0.0003340464260829209,
+      "n_paths": 500000,
+      "seed": 4309,
+      "stock_measure": true,
+      "grid_minus_mc": -0.00047322192197285506,
+      "difference_in_mc_standard_errors": -1.4166351890721514,
+      "final_grid_delta": 0.9072766423521007,
+      "final_grid_minus_mc": 0.00029941228290919497,
+      "final_difference_in_mc_standard_errors": 0.8963193721907127,
+      "component": "fine grid"
+    },
+    {
+      "tau": 2,
+      "S": 100,
+      "h": 3e-05,
+      "grid_delta": 0.5120529949512901,
+      "estimate": 0.51196115908259,
+      "standard_error": 0.0003900126339051788,
+      "n_paths": 500000,
+      "seed": 4310,
+      "stock_measure": true,
+      "grid_minus_mc": 9.183586870009641e-05,
+      "difference_in_mc_standard_errors": 0.23546895848103183,
+      "final_grid_delta": 0.5123205642792047,
+      "final_grid_minus_mc": 0.0003594051966147038,
+      "final_difference_in_mc_standard_errors": 0.9215219338306965,
+      "component": "fine grid"
+    },
+    {
+      "tau": 63,
+      "S": 100,
+      "h": 0.001,
+      "grid_delta": 0.5941566590078012,
+      "estimate": 0.594389092697112,
+      "standard_error": 0.0006638369490156796,
+      "n_paths": 500000,
+      "seed": 4311,
+      "stock_measure": true,
+      "grid_minus_mc": -0.000232433689310807,
+      "difference_in_mc_standard_errors": -0.3501367160346433,
+      "final_grid_delta": 0.5945394700858383,
+      "final_grid_minus_mc": 0.00015037738872625273,
+      "final_difference_in_mc_standard_errors": 0.22652759679802165,
+      "component": "fine grid"
+    },
+    {
+      "tau": 16,
+      "S": 78.88142363200441,
+      "h": 0.04996103759603325,
+      "estimate": 0.5420787383776651,
+      "standard_error": 0.0006338771118086714,
+      "n_paths": 500000,
+      "seed": 4390,
+      "stock_measure": true,
+      "absorbed_extreme_variance_paths": 0,
+      "final_grid_delta": 0.5416937459559407,
+      "final_grid_minus_mc": -0.00038499242172440606,
+      "final_difference_in_mc_standard_errors": -0.6073612922004535,
+      "component": "wide tail grid",
+      "narrow_domain_diagnostic": {
+        "delta": 0.5376780936916238,
+        "error_in_mc_standard_errors": -6.942425596476771
+      }
+    },
+    {
+      "tau": 7,
+      "S": 45.76078244157233,
+      "h": 0.07822242597110673,
+      "estimate": 0.19208665781717876,
+      "standard_error": 0.0004535676500311017,
+      "n_paths": 500000,
+      "seed": 4391,
+      "stock_measure": true,
+      "absorbed_extreme_variance_paths": 0,
+      "final_grid_delta": 0.19277520347086768,
+      "final_grid_minus_mc": 0.0006885456536889212,
+      "final_difference_in_mc_standard_errors": 1.5180660561698056,
+      "component": "wide tail grid",
+      "narrow_domain_diagnostic": {
+        "delta": 0.18963092184163402,
+        "error_in_mc_standard_errors": -5.414266152747777
+      }
+    },
+    {
+      "tau": 63,
+      "S": 100,
+      "h": 2.6083121124996644e-05,
+      "final_grid_delta": 0.5650886741497211,
+      "estimate": 0.5656493548477315,
+      "standard_error": 0.000490428790236961,
+      "n_paths": 1000000,
+      "seed": 3947,
+      "stock_measure": false,
+      "final_grid_minus_mc": -0.0005606806980104073,
+      "final_difference_in_mc_standard_errors": -1.1432458884387733,
+      "component": "fine grid"
+    },
+    {
+      "tau": 38,
+      "S": 80,
+      "h": 0.012,
+      "estimate": 0.4213031798480653,
+      "standard_error": 0.0006656620287940931,
+      "n_paths": 500000,
+      "seed": 39471,
+      "stock_measure": true,
+      "absorbed_extreme_variance_paths": 0,
+      "wide_grid_delta": 0.422406213167592,
+      "wide_minus_mc": 0.001103033319526714,
+      "wide_difference_se": 1.6570470776663624,
+      "component": "wide tail grid",
+      "final_grid_delta": 0.422406213167592,
+      "final_grid_minus_mc": 0.001103033319526714,
+      "final_difference_in_mc_standard_errors": 1.6570470776663624
+    }
+  ],
+  "stronger_otm_mc": {
+    "estimate": 0.11182221920172718,
+    "standard_error": 0.00019711417782563757,
+    "n_paths": 2000000,
+    "seed": 69342,
+    "stock_measure": true
+  },
+  "refinement": [
+    {
+      "tau": 63,
+      "S": 100,
+      "h": 2.6083121124996644e-05,
+      "fine_delta": 0.5648754189420648,
+      "extra_fine_delta": 0.5650877837604906,
+      "difference": 0.00021236481842579202
+    },
+    {
+      "tau": 63,
+      "S": 100,
+      "h": 2.6666335467727468e-05,
+      "fine_delta": 0.5649282885571253,
+      "extra_fine_delta": 0.5651396058929333,
+      "difference": 0.0002113173358080367
+    },
+    {
+      "tau": 31,
+      "S": 95,
+      "h": 4e-05,
+      "fine_delta": 0.11261999633492145,
+      "extra_fine_delta": 0.11215138526519602,
+      "difference": -0.00046861106972542754
+    },
+    {
+      "tau": 10,
+      "S": 105,
+      "h": 0.00015,
+      "fine_delta": 0.9071764056369294,
+      "extra_fine_delta": 0.9072766423521037,
+      "difference": 0.00010023671517433996
+    },
+    {
+      "tau": 2,
+      "S": 100,
+      "h": 3e-05,
+      "fine_delta": 0.5123300635427395,
+      "extra_fine_delta": 0.5123205642792047,
+      "difference": -9.499263534773483e-06
+    },
+    {
+      "tau": 63,
+      "S": 100,
+      "h": 0.001,
+      "fine_delta": 0.5944094412904116,
+      "extra_fine_delta": 0.5944670769787134,
+      "difference": 5.7635688301749255e-05
+    }
+  ],
+  "black_scholes_special_case": [
+    {
+      "tau": 63,
+      "S": 100,
+      "h": 0.00012340980408667956,
+      "grid_delta": 0.5156579412984217,
+      "Black_Scholes_delta": 0.5156770951611663,
+      "difference": -1.9153862744647476e-05
+    },
+    {
+      "tau": 63,
+      "S": 95,
+      "h": 0.00012340980408667956,
+      "grid_delta": 0.2945940501784508,
+      "Black_Scholes_delta": 0.29439361972765704,
+      "difference": 0.00020043045079376487
+    },
+    {
+      "tau": 31,
+      "S": 105,
+      "h": 0.00012340980408667956,
+      "grid_delta": 0.7920723770712705,
+      "Black_Scholes_delta": 0.7923224253400122,
+      "difference": -0.00025004826874164277
+    },
+    {
+      "tau": 2,
+      "S": 100,
+      "h": 0.00012340980408667956,
+      "grid_delta": 0.5031122316016184,
+      "Black_Scholes_delta": 0.5031081759769419,
+      "difference": 4.05562467653553e-06
+    },
+    {
+      "tau": 1,
+      "S": 100,
+      "h": 0.00012340980408667956,
+      "grid_delta": 0.5022115296932038,
+      "Black_Scholes_delta": 0.5022115296932038,
+      "difference": 0.0
+    }
+  ],
+  "domain_audit_initial_domain": {
+    "paths": 100000,
+    "seed": 45,
+    "days": 63,
+    "min_x": -1.4543777371252316,
+    "max_x": 0.5130615537130518,
+    "min_h": 1.4337600565342994e-05,
+    "max_h": 0.08270145041806112,
+    "variance_boundary_count": 8,
+    "moneyness_boundary_count": 0,
+    "state_evaluations": 6300000
+  },
+  "domain_adjustment": "Final logvariance domain [-12,-1] extends above every sampled physical state. Lower variance bound is below the GJR deterministic lower invariant bound omega/(1-beta). No training objective/model/parameters were changed during domain selection.",
+  "warning": "This deterministic benchmark differs from the authors 1000-path nested Monte Carlo benchmark. Rounded parameters and repository-versus-paper discrepancies are handled separately by the root replication.",
+  "tail_refinement_checks": [
+    {
+      "tau": 16,
+      "S": 78.88142363200441,
+      "h": 0.04996103759603325,
+      "estimate": 0.5420787383776651,
+      "standard_error": 0.0006338771118086714,
+      "n_paths": 500000,
+      "seed": 4390,
+      "stock_measure": true,
+      "absorbed_extreme_variance_paths": 0,
+      "wide_grid_delta": 0.5416937459559407,
+      "wide_minus_mc": -0.00038499242172440606,
+      "wide_difference_se": -0.6073612922004535
+    },
+    {
+      "tau": 7,
+      "S": 45.76078244157233,
+      "h": 0.07822242597110673,
+      "estimate": 0.19208665781717876,
+      "standard_error": 0.0004535676500311017,
+      "n_paths": 500000,
+      "seed": 4391,
+      "stock_measure": true,
+      "absorbed_extreme_variance_paths": 0,
+      "wide_grid_delta": 0.19277520347086768,
+      "wide_minus_mc": 0.0006885456536889212,
+      "wide_difference_se": 1.5180660561698056
+    },
+    {
+      "tau": 38,
+      "S": 80,
+      "h": 0.012,
+      "estimate": 0.4213031798480653,
+      "standard_error": 0.0006656620287940931,
+      "n_paths": 500000,
+      "seed": 39471,
+      "stock_measure": true,
+      "absorbed_extreme_variance_paths": 0,
+      "wide_grid_delta": 0.422406213167592,
+      "wide_minus_mc": 0.001103033319526714,
+      "wide_difference_se": 1.6570470776663624
+    }
+  ],
+  "tail_refinement_diagnostics": {
+    "method": "stock-numeraire Gaussian quadrature with bilinear interpolation",
+    "params": {
+      "mu": 0.0006252906867408154,
+      "omega": 2.965710904850983e-06,
+      "alpha": 0.1000004458628082,
+      "beta": 0.7799996137183315,
+      "gamma": 0.19999943438148582,
+      "r": 0.0167,
+      "q": 0.0165,
+      "trading_days": 252
+    },
+    "config": {
+      "x_min": -1.5,
+      "x_max": 1.5,
+      "nx": 4801,
+      "logh_min": -12,
+      "logh_max": -1,
+      "nh": 221,
+      "quadrature_nodes": 48,
+      "dtype": "float32"
+    },
+    "build_seconds": 213.6109232500021,
+    "evaluations": 2,
+    "variance_clamps": 0,
+    "moneyness_clamps": 0,
+    "probability_min": 0.0,
+    "probability_max": 1.0,
+    "monotonicity_min_diff": 0.0,
+    "tail_refinement_threshold": 0.01,
+    "tail_grid_config": {
+      "x_min": -4,
+      "x_max": 4,
+      "nx": 1601,
+      "logh_min": -12,
+      "logh_max": 3,
+      "nh": 301,
+      "quadrature_nodes": 48,
+      "dtype": "float32"
+    }
+  },
+  "tail_refinement_method": "Call enable_tail_refinement(threshold=.01) before evaluation. A wide-domain grid in RAM provides all deltas above the variance threshold; final one-day delta remains analytic. Two exceptional high-variance states and one longer-maturity high-variance state were tested against independent stock-measure conditional simulation.",
+  "validation_summary": {
+    "maximum_absolute_mc_standard_error_difference": 1.6570470776663624,
+    "conditional_mc_paths_per_case": "500,000; initial direct-Q comparison1,000,000; additional OTM refinement comparison2,000,000",
+    "typical_spot_refinement_max_delta_change": 0.00046861106972542754,
+    "upper_invariant_variance_floor": 1.3480480443584113e-05,
+    "precision": "float32 storage, float64 quadrature accumulation and evaluation"
+  }
+}

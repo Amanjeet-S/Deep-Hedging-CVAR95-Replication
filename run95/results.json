@@ -1,0 +1,141 @@
+{
+  "metrics": [
+    {
+      "name": "Deep hedging CVaR95 loss",
+      "published": 3.481,
+      "estimate": 2.8847256585598227,
+      "standard_error": 0.04801917277375949,
+      "ci_low": 2.790608079923254,
+      "ci_high": 2.9788432371963913,
+      "difference": -0.5962743414401772
+    },
+    {
+      "name": "Deep minus delta CVaR95 loss",
+      "published": -0.081,
+      "estimate": -0.0752201046079084,
+      "standard_error": 0.038560443760241044,
+      "ci_low": -0.15079857437798083,
+      "ci_high": 0.00035836516216404546,
+      "difference": 0.005779895392091602
+    },
+    {
+      "name": "Difference strategy CVaR95 loss",
+      "published": 1.81,
+      "estimate": 1.865053631757672,
+      "standard_error": 0.02682725891399249,
+      "ci_low": 1.8124722042862467,
+      "ci_high": 1.9176350592290974,
+      "difference": 0.05505363175767197
+    },
+    {
+      "name": "Difference strategy mean P&L",
+      "published": -0.254,
+      "estimate": -0.2627795269327826,
+      "standard_error": 0.003372316318604627,
+      "ci_low": -0.2693892669172477,
+      "ci_high": -0.25616978694831755,
+      "difference": -0.008779526932782611
+    }
+  ],
+  "config": {
+    "maturity": 63,
+    "spot": 100.0,
+    "strike": 100.0,
+    "r": 0.0167,
+    "q": 0.0165,
+    "confidence": 0.95,
+    "borrowing_limit": 100.0,
+    "training_paths": 400000,
+    "validation_paths": 50000,
+    "test_paths": 100000,
+    "epochs": 50,
+    "batch_size": 1000,
+    "learning_rate": 0.0005,
+    "training_seed": 43,
+    "validation_seed": 44,
+    "test_seed": 45,
+    "model_seed": 4301,
+    "price_seed": 46,
+    "initial_capital": 3.16
+  },
+  "parameters": {
+    "mu": 0.0006252906867408154,
+    "omega": 2.965710904850983e-06,
+    "alpha": 0.1000004458628082,
+    "gamma": 0.19999943438148582,
+    "beta": 0.7799996137183315,
+    "initial_variance": 2.6083121124996644e-05
+  },
+  "best_epoch": 31,
+  "best_validation_cvar": 2.9052255080223084,
+  "delta_cvar": 2.959945763167731,
+  "delta_standard_error": 0.0351818334201631,
+  "checks": {
+    "overlay_identity_max_error": 4.263256414560601e-14,
+    "hedging_loss_identity_max_error": 4.263256414560601e-14,
+    "torch_vs_float64_wealth_max_error": 2.037142351696275e-05,
+    "minimum_cash_float64": -100.00003353555076,
+    "minimum_cash_torch": -100.00001525878906,
+    "borrowing_limit_tolerance": 0.001,
+    "finite_test_losses": true,
+    "training_test_distinct_seeds": true,
+    "validation_test_distinct_seeds": true
+  },
+  "delta_grid": {
+    "method": "stock-numeraire Gaussian quadrature with bilinear interpolation",
+    "params": {
+      "mu": 0.0006252906867408154,
+      "omega": 2.965710904850983e-06,
+      "alpha": 0.1000004458628082,
+      "beta": 0.7799996137183315,
+      "gamma": 0.19999943438148582,
+      "r": 0.0167,
+      "q": 0.0165,
+      "trading_days": 252
+    },
+    "config": {
+      "x_min": -1.5,
+      "x_max": 1.5,
+      "nx": 4801,
+      "logh_min": -12,
+      "logh_max": -1,
+      "nh": 221,
+      "quadrature_nodes": 48,
+      "dtype": "float32"
+    },
+    "build_seconds": 213.6109232500021,
+    "evaluations": 6200000,
+    "variance_clamps": 0,
+    "moneyness_clamps": 0,
+    "probability_min": 0.0,
+    "probability_max": 1.0,
+    "monotonicity_min_diff": 0.0,
+    "tail_refinement_threshold": 0.01,
+    "tail_grid_config": {
+      "x_min": -4,
+      "x_max": 4,
+      "nx": 1601,
+      "logh_min": -12,
+      "logh_max": 3,
+      "nh": 301,
+      "quadrature_nodes": 48,
+      "dtype": "float32"
+    }
+  },
+  "overlay_quantiles": {
+    "0.001": -5.6952781828680985,
+    "0.01": -1.7210776184432752,
+    "0.05": -1.3894157616859968,
+    "0.5": -0.44456417238469625,
+    "0.95": 1.4563062388264207,
+    "0.99": 2.187258248446285,
+    "0.999": 5.233947034444537
+  },
+  "overlay_range": [
+    -40.25399814639762,
+    21.435711138243473
+  ],
+  "outside_central_plot": 244,
+  "conditional_uncertainty_note": "Sampling intervals condition on one selected policy, fitted/reconstructed parameters and the numerical delta benchmark. They exclude training-seed, parameter and grid uncertainty.",
+  "statistical_arbitrage_criterion_met": false
+}

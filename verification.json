@@ -1,0 +1,51 @@
+{
+  "seed_reproducibility": {
+    "passed": true
+  },
+  "known_initial_state": {
+    "passed": true
+  },
+  "cash_account_0.3": {
+    "passed": true,
+    "max_abs_error": 1.8902837606304956e-07
+  },
+  "borrowing_constraint_0.3": {
+    "passed": true,
+    "minimum_cash": -26.840003967285156
+  },
+  "cash_account_-0.5": {
+    "passed": true,
+    "max_abs_error": 4.778112483450059e-07
+  },
+  "borrowing_constraint_-0.5": {
+    "passed": true,
+    "minimum_cash": 53.160003662109375
+  },
+  "cash_account_1000.0": {
+    "passed": true,
+    "max_abs_error": 3.745785903674914e-07
+  },
+  "borrowing_constraint_1000.0": {
+    "passed": true,
+    "minimum_cash": -100.00000762939453
+  },
+  "cvar_gradient": {
+    "passed": true,
+    "autograd": -3.39935302734375,
+    "analytic": -3.399352815553119
+  },
+  "cvar_tail": {
+    "passed": true
+  },
+  "overlay_wealth_identity": {
+    "passed": true,
+    "max_absolute_residual": 8.881784197001252e-16
+  },
+  "torchscript_terminal_wealth": {
+    "passed": true,
+    "max_absolute_residual": 1.0259666849421478e-06
+  },
+  "predictability": {
+    "passed": true
+  }
+}
