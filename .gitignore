@@ -8,6 +8,8 @@ __pycache__/
 *.synctex.gz
 delta_grid*.npz
 retrained95/
+panel_b_retrained/
+.matplotlib/
 recalibration.json
 rerun-price-audit.json
 .DS_Store

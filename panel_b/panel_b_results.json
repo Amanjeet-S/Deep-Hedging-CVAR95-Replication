@@ -1,0 +1,282 @@
+{
+  "author": "Amanjeet Singh",
+  "test_paths": 100000,
+  "test_seed": 45,
+  "common_market_paths": true,
+  "parameters": {
+    "mu": 0.0006252906867408154,
+    "omega": 2.965710904850983e-06,
+    "alpha": 0.1000004458628082,
+    "gamma": 0.19999943438148582,
+    "beta": 0.7799996137183315,
+    "initial_variance": 2.6083121124996644e-05
+  },
+  "agents": {
+    "85": {
+      "confidence": 0.85,
+      "config": {
+        "maturity": 63,
+        "spot": 100.0,
+        "strike": 100.0,
+        "r": 0.0167,
+        "q": 0.0165,
+        "confidence": 0.85,
+        "borrowing_limit": 100.0,
+        "training_paths": 400000,
+        "validation_paths": 50000,
+        "test_paths": 100000,
+        "epochs": 50,
+        "batch_size": 1000,
+        "learning_rate": 0.0005,
+        "training_seed": 43,
+        "validation_seed": 44,
+        "test_seed": 45,
+        "model_seed": 4301,
+        "price_seed": 46,
+        "initial_capital": 3.16
+      },
+      "best_epoch": 47,
+      "best_validation_cvar": 1.3800846808840055,
+      "metrics": [
+        {
+          "name": "Deep hedging CVaR loss",
+          "published": 1.979,
+          "estimate": 1.3373821181475287,
+          "standard_error": 0.02799853516491316,
+          "ci_low": 1.282504989224299,
+          "ci_high": 1.3922592470707584,
+          "difference": -0.6416178818524714
+        },
+        {
+          "name": "Deep minus delta CVaR loss",
+          "published": -0.004,
+          "estimate": -0.08717670327323579,
+          "standard_error": 0.02346334971696061,
+          "ci_low": -0.1331648687184786,
+          "ci_high": -0.04118853782799299,
+          "difference": -0.08317670327323579
+        },
+        {
+          "name": "Difference strategy CVaR loss",
+          "published": 1.28,
+          "estimate": 1.1196360822661833,
+          "standard_error": 0.02006477224052423,
+          "ci_low": 1.0803091286747557,
+          "ci_high": 1.1589630358576108,
+          "difference": -0.16036391773381675
+        },
+        {
+          "name": "Difference strategy mean P&L",
+          "published": -0.031,
+          "estimate": 0.014389842477205086,
+          "standard_error": 0.003893597473886665,
+          "ci_low": 0.006758391428387222,
+          "ci_high": 0.02202129352602295,
+          "difference": 0.04538984247720509
+        }
+      ],
+      "delta_cvar": 1.4245588214207645,
+      "overlay_mean": 0.014389842477205086,
+      "overlay_range": [
+        -42.48486380776983,
+        34.568526962157684
+      ],
+      "outside_central_range": 712,
+      "below_central_range": 527,
+      "above_central_range": 185,
+      "central_histogram_count": 99288,
+      "statistical_arbitrage_criterion_met_in_sample": false,
+      "checks": {
+        "initial_capital": 3.16,
+        "minimum_cash_float64": -100.00003187716953,
+        "minimum_cash_policy": -100.00001525878906,
+        "torch_vs_float64_wealth_max_error": 2.5385251813503373e-05,
+        "frozen_positions_model_price_minimum_cash": -100.39156701632227,
+        "frozen_positions_model_price_borrowing_violating_paths": 72750,
+        "borrowing_tolerance": 0.001
+      }
+    },
+    "90": {
+      "confidence": 0.9,
+      "config": {
+        "maturity": 63,
+        "spot": 100.0,
+        "strike": 100.0,
+        "r": 0.0167,
+        "q": 0.0165,
+        "confidence": 0.9,
+        "borrowing_limit": 100.0,
+        "training_paths": 400000,
+        "validation_paths": 50000,
+        "test_paths": 100000,
+        "epochs": 50,
+        "batch_size": 1000,
+        "learning_rate": 0.0005,
+        "training_seed": 43,
+        "validation_seed": 44,
+        "test_seed": 45,
+        "model_seed": 4301,
+        "price_seed": 46,
+        "initial_capital": 3.16
+      },
+      "best_epoch": 40,
+      "best_validation_cvar": 1.9267102546572685,
+      "metrics": [
+        {
+          "name": "Deep hedging CVaR loss",
+          "published": 2.412,
+          "estimate": 1.875336111751292,
+          "standard_error": 0.031906793266013485,
+          "ci_low": 1.8127987969499055,
+          "ci_high": 1.9378734265526782,
+          "difference": -0.536663888248708
+        },
+        {
+          "name": "Deep minus delta CVaR loss",
+          "published": -0.115,
+          "estimate": -0.0801425836369003,
+          "standard_error": 0.02669688545239841,
+          "ci_low": -0.13246847912360118,
+          "ci_high": -0.027816688150199415,
+          "difference": 0.034857416363099705
+        },
+        {
+          "name": "Difference strategy CVaR loss",
+          "published": 1.433,
+          "estimate": 1.41650654336024,
+          "standard_error": 0.02095702855055295,
+          "ci_low": 1.375430767401156,
+          "ci_high": 1.4575823193193238,
+          "difference": -0.016493456639760096
+        },
+        {
+          "name": "Difference strategy mean P&L",
+          "published": -0.126,
+          "estimate": -0.16279531840146513,
+          "standard_error": 0.0034568360551896354,
+          "ci_low": -0.1695707170696368,
+          "ci_high": -0.15601991973329346,
+          "difference": -0.03679531840146513
+        }
+      ],
+      "delta_cvar": 1.9554786953881922,
+      "overlay_mean": -0.16279531840146513,
+      "overlay_range": [
+        -41.16322654637915,
+        29.19532676604272
+      ],
+      "outside_central_range": 384,
+      "below_central_range": 237,
+      "above_central_range": 147,
+      "central_histogram_count": 99616,
+      "statistical_arbitrage_criterion_met_in_sample": false,
+      "checks": {
+        "initial_capital": 3.16,
+        "minimum_cash_float64": -100.0000313808819,
+        "minimum_cash_policy": -100.00001525878906,
+        "torch_vs_float64_wealth_max_error": 1.7920523543324407e-05,
+        "frozen_positions_model_price_minimum_cash": -100.39156836540873,
+        "frozen_positions_model_price_borrowing_violating_paths": 54659,
+        "borrowing_tolerance": 0.001
+      }
+    },
+    "95": {
+      "confidence": 0.95,
+      "config": {
+        "maturity": 63,
+        "spot": 100.0,
+        "strike": 100.0,
+        "r": 0.0167,
+        "q": 0.0165,
+        "confidence": 0.95,
+        "borrowing_limit": 100.0,
+        "training_paths": 400000,
+        "validation_paths": 50000,
+        "test_paths": 100000,
+        "epochs": 50,
+        "batch_size": 1000,
+        "learning_rate": 0.0005,
+        "training_seed": 43,
+        "validation_seed": 44,
+        "test_seed": 45,
+        "model_seed": 4301,
+        "price_seed": 46,
+        "initial_capital": 3.16
+      },
+      "best_epoch": 31,
+      "best_validation_cvar": 2.9052255080223084,
+      "metrics": [
+        {
+          "name": "Deep hedging CVaR loss",
+          "published": 3.481,
+          "estimate": 2.8847256585598227,
+          "standard_error": 0.04801917277375949,
+          "ci_low": 2.790608079923254,
+          "ci_high": 2.9788432371963913,
+          "difference": -0.5962743414401772
+        },
+        {
+          "name": "Deep minus delta CVaR loss",
+          "published": -0.081,
+          "estimate": -0.0752201046079084,
+          "standard_error": 0.038560443760241044,
+          "ci_low": -0.15079857437798083,
+          "ci_high": 0.00035836516216404546,
+          "difference": 0.005779895392091602
+        },
+        {
+          "name": "Difference strategy CVaR loss",
+          "published": 1.81,
+          "estimate": 1.8650536317576722,
+          "standard_error": 0.026827258913992496,
+          "ci_low": 1.812472204286247,
+          "ci_high": 1.9176350592290976,
+          "difference": 0.055053631757672195
+        },
+        {
+          "name": "Difference strategy mean P&L",
+          "published": -0.254,
+          "estimate": -0.2627795269327826,
+          "standard_error": 0.003372316318604627,
+          "ci_low": -0.2693892669172477,
+          "ci_high": -0.25616978694831755,
+          "difference": -0.008779526932782611
+        }
+      ],
+      "delta_cvar": 2.959945763167731,
+      "overlay_mean": -0.2627795269327826,
+      "overlay_range": [
+        -40.253998146397635,
+        21.435711138243477
+      ],
+      "outside_central_range": 244,
+      "below_central_range": 129,
+      "above_central_range": 115,
+      "central_histogram_count": 99756,
+      "statistical_arbitrage_criterion_met_in_sample": false,
+      "checks": {
+        "initial_capital": 3.16,
+        "minimum_cash_float64": -100.00003353555076,
+        "minimum_cash_policy": -100.00001525878906,
+        "torch_vs_float64_wealth_max_error": 2.037142351696275e-05,
+        "frozen_positions_model_price_minimum_cash": -100.39156498509645,
+        "frozen_positions_model_price_borrowing_violating_paths": 33680,
+        "borrowing_tolerance": 0.001
+      }
+    }
+  },
+  "uncertainty_note": "Empirical plug-in intervals condition on fixed selected policies, retained parameters and the numerical delta benchmark. They exclude calibration, training and quadrature uncertainty. Required hedge-loss tail moments and normal population coverage have not been established.",
+  "histogram": {
+    "range": [
+      -5,
+      5
+    ],
+    "bins": 100,
+    "width": 0.1,
+    "note": "Common bins defined for this independent reproduction; the original published bin settings are not disclosed in the inspected implementation."
+  },
+  "reference95_checks": {
+    "deep_loss_max_error": 0.0,
+    "overlay_max_error": 4.263256414560601e-14
+  }
+}

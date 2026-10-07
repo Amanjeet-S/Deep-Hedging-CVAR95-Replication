@@ -1,4 +1,4 @@
-# Deep hedging at 95% confidence
+# Deep hedging at 95% confidence and Figure 1, Panel B
 
 Research and implementation by [Amanjeet Singh](https://github.com/Amanjeet-S).
 
@@ -22,6 +22,32 @@ The difference strategy holds deep-minus-delta positions with zero initial capit
 The [histogram](run95/figure1_95.png) shows independently simulated outcomes. It is not the published Figure 1. The full view retains all observations; 244 lie outside the central range [−5, 5]. The supplied weights and [terminal outcomes](run95/terminal_results.npz) preserve the completed run.
 
 These intervals condition on the selected policy, calibration and delta approximation. The necessary population tail moments are not established; the intervals are empirical diagnostics. The note provides the derivations and qualifications. The published calibration, seeds and original weights have not been recovered, and the numerical results differ.
+
+## Figure 1, Panel B
+
+I extend the comparison to the 85%, 90% and 95% agents using the same calibration, initial capital **3.16**, and 100,000 test paths. The two additional runs complete 50 epochs; validation selects epoch 47 for 85% and epoch 40 for 90%. The recorded 95% checkpoint remains epoch 31.
+
+[Panel B](panel_b/figure1_panel_b.png) overlays the three independently simulated P&L distributions. [Full range](panel_b/figure1_panel_b_full_range.png) retains every outcome. Common central bins have width 0.1; the counts outside [−5, 5] are 712, 384 and 244, respectively.
+
+| Agent | Deep loss CVaR | Deep minus delta CVaR | Overlay loss CVaR | Mean overlay profit |
+|---|---:|---:|---:|---:|
+| 85% | 1.337382 | -0.087177 | 1.119636 | 0.014390 |
+| 90% | 1.875336 | -0.080143 | 1.416507 | -0.162795 |
+| 95% | 2.884726 | -0.075220 | 1.865054 | -0.262780 |
+
+CVaR is evaluated at each agent's confidence level. All three overlay loss CVaRs are positive in this sample; the 85% mean profit is slightly positive. The recomputed 95% deep losses agree exactly with the preserved baseline; the largest overlay difference is 4.3×10⁻¹⁴.
+
+[Initial-capital audit](panel_b/capital_audit.json) confirms **3.16** in all saved configurations. With position paths fixed, changing both initial capitals translates both standalone loss CVaRs equally and leaves their gap and overlay profits unchanged. Reducing capital to the independently priced **2.770068** adds **0.391563** to each frozen-position CVaR; these frozen positions breach the cash limit on 33,680 paths for the 95% hedge, so that accounting control is not an admissible alternative policy.
+
+Re-evaluating the saved 95% network from capital 2.770068 changes its wealth input and positions. Its loss CVaR becomes **3.419705**, its gap becomes **0.068196**, and overlay loss CVaR becomes **2.168302**. This is a fixed-weights policy re-evaluation, not retraining or a recovered published calibration. It does not reproduce the published difference statistics.
+
+`panel_b.py` implements the extension. The [results](panel_b/panel_b_results.json), [common histogram](panel_b/panel_b_histogram.csv), selected checkpoints, complete training histories and terminal outcomes are in `panel_b/`. To retrain and evaluate:
+
+```sh
+python panel_b.py train --confidence 85 --folder panel_b_retrained
+python panel_b.py train --confidence 90 --folder panel_b_retrained
+python panel_b.py evaluate --folder panel_b_retrained --capital-control --full-range
+```
 
 ## Method
 

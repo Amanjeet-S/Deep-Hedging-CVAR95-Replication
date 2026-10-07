@@ -1,0 +1,120 @@
+{
+  "author": "Amanjeet Singh",
+  "checkpoint_initial_capital": {
+    "95": 3.16,
+    "85": 3.16,
+    "90": 3.16
+  },
+  "model_price": 2.7700684349135973,
+  "terminal_cash_growth": 1.00418372745398,
+  "fixed_position_controls": {
+    "95": {
+      "label": "Accounting diagnostic: initial capital changed to model price with both position paths frozen",
+      "original_initial_capital": 3.16,
+      "control_initial_capital": 2.7700684349135973,
+      "terminal_loss_increase": 0.39156293248042817,
+      "deep_cvar": 3.2762885910402515,
+      "delta_cvar": 3.3515086956481595,
+      "cvar_gap": -0.07522010460790796,
+      "gap_change": 4.440892098500626e-16,
+      "overlay_identity_max_error": 7.105427357601002e-15,
+      "overlay_cvar": 1.865053631757672,
+      "overlay_mean": -0.26277952693278267,
+      "minimum_cash_deep_hedge": -100.39156498509645,
+      "borrowing_violating_deep_paths": 33680,
+      "borrowing_tolerance": 0.001,
+      "deep_hedge_admissible_with_tolerance": false,
+      "interpretation": "This is a cash-translation accounting diagnostic, not a policy rerun or retraining. Frozen positions can violate the borrowing limit after reducing initial cash; admissibility is not presumed."
+    },
+    "85": {
+      "label": "Accounting diagnostic: initial capital changed to model price with both position paths frozen",
+      "original_initial_capital": 3.16,
+      "control_initial_capital": 2.7700684349135973,
+      "terminal_loss_increase": 0.39156293248042817,
+      "deep_cvar": 1.7289450506279567,
+      "delta_cvar": 1.8161217539011927,
+      "cvar_gap": -0.08717670327323601,
+      "gap_change": -2.220446049250313e-16,
+      "overlay_identity_max_error": 7.105427357601002e-15,
+      "overlay_cvar": 1.1196360822661833,
+      "overlay_mean": 0.01438984247720508,
+      "minimum_cash_deep_hedge": -100.39156701632227,
+      "borrowing_violating_deep_paths": 72750,
+      "borrowing_tolerance": 0.001,
+      "deep_hedge_admissible_with_tolerance": false,
+      "interpretation": "This is a cash-translation accounting diagnostic, not a policy rerun or retraining. Frozen positions can violate the borrowing limit after reducing initial cash; admissibility is not presumed."
+    },
+    "90": {
+      "label": "Accounting diagnostic: initial capital changed to model price with both position paths frozen",
+      "original_initial_capital": 3.16,
+      "control_initial_capital": 2.7700684349135973,
+      "terminal_loss_increase": 0.39156293248042817,
+      "deep_cvar": 2.2668990442317196,
+      "delta_cvar": 2.34704162786862,
+      "cvar_gap": -0.08014258363690052,
+      "gap_change": -2.220446049250313e-16,
+      "overlay_identity_max_error": 7.105427357601002e-15,
+      "overlay_cvar": 1.41650654336024,
+      "overlay_mean": -0.16279531840146516,
+      "minimum_cash_deep_hedge": -100.39156836540873,
+      "borrowing_violating_deep_paths": 54659,
+      "borrowing_tolerance": 0.001,
+      "deep_hedge_admissible_with_tolerance": false,
+      "interpretation": "This is a cash-translation accounting diagnostic, not a policy rerun or retraining. Frozen positions can violate the borrowing limit after reducing initial cash; admissibility is not presumed."
+    }
+  },
+  "wealth_feedback_note": "Changing initial wealth while rerunning the policy can change its wealth input and borrowing cap. Cash-translation invariance applies only with positions fixed.",
+  "frozen_weights95_policy_rerun": {
+    "label": "95% weights fixed, policy rerun at model-price capital; not retraining",
+    "runtime_initial_capital": 2.7700684349135973,
+    "checkpoint_initial_capital": 3.16,
+    "metrics": [
+      {
+        "name": "Deep hedging CVaR loss",
+        "published": 3.481,
+        "estimate": 3.419704899291249,
+        "standard_error": 0.04928989046631832,
+        "ci_low": 3.323096713977265,
+        "ci_high": 3.516313084605233,
+        "difference": -0.061295100708750994
+      },
+      {
+        "name": "Deep minus delta CVaR loss",
+        "published": -0.081,
+        "estimate": 0.06819620364308943,
+        "standard_error": 0.04054882292390506,
+        "ci_low": -0.011279489287764496,
+        "ci_high": 0.14767189657394336,
+        "difference": 0.14919620364308944
+      },
+      {
+        "name": "Difference strategy CVaR loss",
+        "published": 1.81,
+        "estimate": 2.168301518786482,
+        "standard_error": 0.02673307969981634,
+        "ci_low": 2.115904682574842,
+        "ci_high": 2.2206983549981216,
+        "difference": 0.35830151878648175
+      },
+      {
+        "name": "Difference strategy mean P&L",
+        "published": -0.254,
+        "estimate": -0.38184911565136453,
+        "standard_error": 0.0037086115939028936,
+        "ci_low": -0.3891179943754142,
+        "ci_high": -0.37458023692731485,
+        "difference": -0.12784911565136453
+      }
+    ],
+    "checks": {
+      "initial_capital": 2.7700684349135973,
+      "minimum_cash_float64": -100.00003626445786,
+      "minimum_cash_policy": -100.00001525878906,
+      "torch_vs_float64_wealth_max_error": 2.4710950029316336e-05,
+      "frozen_positions_model_price_minimum_cash": -100.00003626445786,
+      "frozen_positions_model_price_borrowing_violating_paths": 0,
+      "borrowing_tolerance": 0.001
+    },
+    "overlay_change_max": 7.248817866043362
+  }
+}

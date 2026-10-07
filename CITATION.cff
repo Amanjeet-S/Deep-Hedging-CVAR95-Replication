@@ -1,10 +1,10 @@
 cff-version: 1.2.0
 message: "To cite this repository, use the metadata below."
 type: software
-title: "Deep hedging at 95% confidence: independent replication"
+title: "Deep hedging at 95% confidence and Figure 1, Panel B: independent replication"
 authors:
   - family-names: Singh
     given-names: Amanjeet
 repository-code: "https://github.com/Amanjeet-S/deep-hedging-cvar95-replication"
-version: 1.0.0
-date-released: 2026-10-04
+version: 1.1.0
+date-released: 2026-10-07
