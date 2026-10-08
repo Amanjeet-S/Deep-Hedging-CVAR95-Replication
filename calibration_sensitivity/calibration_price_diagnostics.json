@@ -1,0 +1,617 @@
+{
+  "author": "Amanjeet Singh",
+  "status": "complete",
+  "historical_audit": {
+    "author": "Amanjeet Singh",
+    "paper_reference": {
+      "authors": [
+        "Pascal Fran\u00e7ois",
+        "Genevi\u00e8ve Gauthier",
+        "Fr\u00e9d\u00e9ric Godin",
+        "Carlos Octavio P\u00e9rez Mendoza"
+      ],
+      "year": 2025,
+      "title": "Is the difference between deep hedging and delta hedging a statistical arbitrage?",
+      "journal": "Finance Research Letters",
+      "volume": 73,
+      "article": 106590,
+      "doi": "10.1016/j.frl.2024.106590"
+    },
+    "historical_sample": {
+      "dataset": "data/SP500_random.csv",
+      "raw_observations": 6291,
+      "slice_zero_based_start_row": 5031,
+      "preceding_close_date": "31/12/15",
+      "first_return_date": "04/01/16",
+      "last_return_date": "31/12/20",
+      "return_count": 1259,
+      "return_definition": "log(Close_t/Close_(t-1)) in decimal units",
+      "source_fit_call": "arch_model(log_returns,vol='Garch',p=1,o=1,q=1,rescale=False).fit(disp='off')",
+      "units": {
+        "mu": "daily decimal log return",
+        "omega": "daily decimal log-return variance",
+        "alpha_gamma_beta": "dimensionless"
+      }
+    },
+    "initial_state": {
+      "terminal_fitted_variance": 2.6083121124996644e-05,
+      "last_observed_log_return": 0.006418204632772233,
+      "last_fitted_residual": 0.005792913946031418,
+      "observed_residual_one_step_forecast": 2.6666335467727468e-05,
+      "forecast_minus_terminal": 5.832143427308246e-07,
+      "forecast_relative_change": 0.02235983722714474,
+      "forecast_formula": "omega+(alpha+gamma*1{residual<0})*residual^2+beta*h_terminal",
+      "cached_source_first_return": "Source generates an artificial residual sqrt(h_terminal)*Z0 and updates variance before the first simulated return; it does not use the final observed fitted residual.",
+      "cached_source_physical_first_return_variance_mean": 2.8527163784861673e-05,
+      "source_random_state_warning": "The source first-return variance is random across paths. A deterministic observed-residual forecast does not reproduce this convention.",
+      "source_feature_timing": "The saved first decision volatility is the terminal fitted variance, while the first generated return uses the variance after the artificial residual update.",
+      "independent_run_convention": "Terminal fitted variance is used as the known first-return variance, without an artificial preliminary innovation."
+    },
+    "paper_disclosure": {
+      "sample_dates": [
+        "4 January 2016",
+        "31 December 2020"
+      ],
+      "printed_parameters": {
+        "mu": "0.06%",
+        "omega": "0.01%",
+        "alpha": 0.11,
+        "gamma": 0.2,
+        "beta": 0.78
+      },
+      "printed_rates": {
+        "r": 0.0167,
+        "q": 0.0165
+      },
+      "reported_initial_option_price": 3.16,
+      "initial_variance_disclosed": false,
+      "full_precision_parameters_disclosed": false,
+      "intercept_units_warning": "The printed 0.01% does not identify the units and scaling needed to recover the fitted daily variance intercept."
+    },
+    "conditioning": {
+      "retained_decimal_loglikelihood": 4298.041204604756,
+      "percentage_fit_decimal_loglikelihood": 4300.789537334078,
+      "unit_conversion": "mu_decimal=mu_percentage/100; omega_decimal=omega_percentage/10000; dimensionless coefficients unchanged",
+      "likelihood_conversion": "LL_decimal=LL_percentage+n_returns*log(100)",
+      "conclusion": "The larger scaled-fit likelihood demonstrates conditioning sensitivity; optimizer success alone does not establish the global maximum."
+    },
+    "cached_source_evidence": {
+      "fit": "src/features/features_simulation.py:119-175",
+      "artificial_initial_residual": "src/features/features_simulation.py:176-182",
+      "variance_before_return": "src/features/features_simulation.py:77-90",
+      "lagged_volatility_feature": "src/features/features_simulation.py:188-190",
+      "risk_neutral_initial_residual": "src/utils.py:62-80",
+      "source_rate_defaults": {
+        "r": 0.026623194,
+        "q": 0.01772245,
+        "model": "Black-Scholes"
+      },
+      "source_pricing_issues": "The Q utility hardcodes q and discounts its already daily risk-free rate by 252 again."
+    },
+    "cached_source_inventory": {
+      "substantive_files": 20,
+      "placeholder_files": 223,
+      "model_checkpoint_files": [],
+      "data_files": [
+        "data/raw/SP500_random.csv",
+        "data/results/Training/Random_63/Call/ATM/plots/metrics.csv"
+      ],
+      "archive_files": [],
+      "published_table_gjr_results_or_full_precision_parameters_stored": false,
+      "gjr_aggregate_results_file": "data/results/Training/Random_63/Call/ATM/plots/metrics.csv",
+      "gjr_aggregate_results": [
+        {
+          "agent": "CVaR_85",
+          "option_price": 3.157064887419532,
+          "deep_cvar": 1.5373702159952358,
+          "overlay_cvar": 1.237592926981811,
+          "overlay_mean": -0.072071944052781,
+          "stored_relative_metric": 0.9406886439124096,
+          "ratio_mapping_confirmed": false,
+          "conditionally_inferred_delta_cvar": 1.6343029396009006,
+          "conditionally_inferred_cvar_gap": -0.09693272360566474
+        },
+        {
+          "agent": "CVaR_90",
+          "option_price": 3.157064887419532,
+          "deep_cvar": 2.0474996678662585,
+          "overlay_cvar": 1.5427330877873544,
+          "overlay_mean": -0.2216827808442805,
+          "stored_relative_metric": 0.9379430993565436,
+          "ratio_mapping_confirmed": false,
+          "conditionally_inferred_delta_cvar": 2.182967889279108,
+          "conditionally_inferred_cvar_gap": -0.1354682214128493
+        },
+        {
+          "agent": "CVaR_95",
+          "option_price": 3.157064887419532,
+          "deep_cvar": 3.024906356005934,
+          "overlay_cvar": 1.979994052127291,
+          "overlay_mean": -0.3077591405907787,
+          "stored_relative_metric": 0.938858828916538,
+          "ratio_mapping_confirmed": false,
+          "conditionally_inferred_delta_cvar": 3.221896905945633,
+          "conditionally_inferred_cvar_gap": -0.19699054993969867
+        }
+      ],
+      "aggregate_results_warning": "These GJR aggregate rows differ from the published table and contain no fitted coefficients or initial variance. The current writer defines a CVaR ratio under the different header Relative_CVaR; the archived Relative_metric header mapping is not recorded. Delta risks and gaps inferred from this field are conditional on that mapping. Only directly stored values are used in the source comparison.",
+      "stored_notebook_experiment": "Black-Scholes",
+      "stored_notebook_option_price": 3.945866,
+      "notebook_python_version": "3.9.6",
+      "source_pinned_versions": {
+        "numpy": "1.26.1",
+        "scipy": "1.11.3",
+        "tensorflow": "2.14.0"
+      },
+      "arch_version_pinned": false,
+      "cached_history_shallow": true,
+      "available_commit_count": 1,
+      "data_identical_to_retained_dataset": true,
+      "recoverability": "The current source snapshot contains the historical sample, fitting procedure and non-matching aggregate GJR results, but neither the original full-precision calibration nor its initial state or checkpoints. The shallow local cache alone does not establish the contents of earlier upstream commits."
+    }
+  },
+  "pricing_method": "62 simulated Q periods plus exact final one-period conditional Gaussian put; put-call parity; 1,000,000 antithetic pairs per seed",
+  "financial_inputs": {
+    "S0": 100,
+    "K": 100,
+    "T_days": 63,
+    "r": 0.0167,
+    "q": 0.0165
+  },
+  "paths_per_seed": 2000000,
+  "seeds": [
+    46,
+    47
+  ],
+  "interval_note": "Normal intervals are asymptotic intervals based on independent bounded antithetic-pair means, not exact finite-sample guarantees.",
+  "selection_note": "Scenarios are fixed in advance and not selected by hedging losses. No policy is trained. The reused price-compatible variance is a previously bracketed illustrative state, not a recovered original input.",
+  "scenarios": [
+    {
+      "label": "baseline_fitted_state",
+      "description": "Retained unscaled fit and terminal fitted variance.",
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315,
+        "initial_variance": 2.6083121124996644e-05
+      },
+      "estimates": [
+        {
+          "price": 2.7700684349135973,
+          "standard_error": 0.0029763686932246726,
+          "paths": 2000000,
+          "put_price": 2.765089141916335,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.5833703196339,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.0002181721257,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 1,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 5022.636133893306,
+          "standard_error_antithetic_pairs": 0.0029763686932246726,
+          "ci95": [
+            2.764234752274877,
+            2.7759021175523175
+          ],
+          "seed": 46,
+          "reused_existing_calculation": true,
+          "price_3p16_in_ci95": false
+        },
+        {
+          "price": 2.7708441390571763,
+          "standard_error": 0.0029759928521381003,
+          "paths": 2000000,
+          "put_price": 2.765864846059914,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.4364504867811,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.00063525706331,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 0,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 2.7263571534344697,
+          "seed": 47,
+          "reused_existing_calculation": false,
+          "ci95": [
+            2.765011193066986,
+            2.7766770850473668
+          ],
+          "price_3p16_in_ci95": false
+        }
+      ]
+    },
+    {
+      "label": "observed_last_residual_forecast",
+      "description": "Retained coefficients; known first-return variance is the one-step forecast from the final observed fitted residual.",
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315,
+        "initial_variance": 2.6666335467727468e-05
+      },
+      "estimates": [
+        {
+          "price": 2.775015008419264,
+          "standard_error": 0.002982245707084725,
+          "paths": 2000000,
+          "put_price": 2.7700357154220017,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.5833703196339,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.00022115718835,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 1,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 6459.909672892429,
+          "seed": 46,
+          "reused_existing_calculation": false,
+          "ci95": [
+            2.769169806833378,
+            2.7808602100051503
+          ],
+          "price_3p16_in_ci95": false
+        },
+        {
+          "price": 2.775784962235852,
+          "standard_error": 0.0029818663578540937,
+          "paths": 2000000,
+          "put_price": 2.7708056692385896,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.44043909947248,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.00064455075812,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 0,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 2.7380227073867793,
+          "seed": 47,
+          "reused_existing_calculation": false,
+          "ci95": [
+            2.7699405041744583,
+            2.781629420297246
+          ],
+          "price_3p16_in_ci95": false
+        }
+      ]
+    },
+    {
+      "label": "illustrative_price_compatible_initial_variance",
+      "description": "Predefined price-bracketed variance 7.75e-5. Baseline and Panel B agents keep the retained fitted state; this variance is used only for the separately labelled sensitivity.",
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315,
+        "initial_variance": 7.75e-05
+      },
+      "estimates": [
+        {
+          "price": 3.1608278778665615,
+          "standard_error": 0.00344087185313589,
+          "paths": 2000000,
+          "put_price": 3.155848584869299,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.5833703196339,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.00039079012689,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 2,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 24950.281206740416,
+          "standard_error_antithetic_pairs": 0.00344087185313589,
+          "ci95": [
+            3.1540837690344152,
+            3.1675719866987078
+          ],
+          "seed": 46,
+          "reused_existing_calculation": true,
+          "price_3p16_in_ci95": true
+        },
+        {
+          "price": 3.161292100982567,
+          "standard_error": 0.0034402025551092817,
+          "paths": 2000000,
+          "put_price": 3.1563128079853047,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.58332705267489,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.00130313248275,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 0,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 4.643295107749845,
+          "standard_error_antithetic_pairs": 0.0034402025551092817,
+          "ci95": [
+            3.154549303974553,
+            3.1680348979905815
+          ],
+          "seed": 47,
+          "reused_existing_calculation": true,
+          "price_3p16_in_ci95": true
+        }
+      ]
+    },
+    {
+      "label": "percentage_return_conditioning_fit_terminal_state",
+      "description": "Independent conditioning control obtained by fitting 100 times the returns and converting its fitted parameters back to decimal units.",
+      "parameters": {
+        "mu": 0.0006821386109908009,
+        "omega": 3.840432081072945e-06,
+        "alpha": 0.14730967126585198,
+        "gamma": 0.23069956417594623,
+        "beta": 0.7207770282209127,
+        "initial_variance": 2.5662900771582957e-05
+      },
+      "estimates": [
+        {
+          "price": 3.052934306088628,
+          "standard_error": 0.003462227486352996,
+          "paths": 2000000,
+          "put_price": 3.0479550130913653,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.5833703196339,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.00012060836549,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 7,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 82012.81954002644,
+          "seed": 46,
+          "reused_existing_calculation": false,
+          "ci95": [
+            3.046148340215376,
+            3.0597202719618797
+          ],
+          "price_3p16_in_ci95": false
+        },
+        {
+          "price": 3.054691890028496,
+          "standard_error": 0.0034623177529864053,
+          "paths": 2000000,
+          "put_price": 3.0497125970312333,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.5833703196339,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.00130364889158,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 4,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 43982.99288952801,
+          "seed": 47,
+          "reused_existing_calculation": false,
+          "ci95": [
+            3.0479057472326425,
+            3.061478032824349
+          ],
+          "price_3p16_in_ci95": false
+        }
+      ]
+    },
+    {
+      "label": "printed_coefficients_hybrid_retained_intercept_and_state",
+      "description": "Hybrid sensitivity: printed mu=0.06%, alpha=0.11, gamma=0.20, beta=0.78, with the retained daily intercept and initial variance. Not the original calibration.",
+      "parameters": {
+        "mu": 0.0006,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.11,
+        "gamma": 0.2,
+        "beta": 0.78,
+        "initial_variance": 2.6083121124996644e-05
+      },
+      "estimates": [
+        {
+          "price": 2.9772276659094152,
+          "standard_error": 0.0032806537102231317,
+          "paths": 2000000,
+          "put_price": 2.9722483729121527,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.5833703196339,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.00033581204467,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 1,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 1355.2387553510807,
+          "seed": 46,
+          "reused_existing_calculation": false,
+          "ci95": [
+            2.9707975846373778,
+            2.9836577471814527
+          ],
+          "price_3p16_in_ci95": false
+        },
+        {
+          "price": 2.9785170283293287,
+          "standard_error": 0.0032813793092682183,
+          "paths": 2000000,
+          "put_price": 2.9735377353320662,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.58329656488615,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.00100160393474,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 0,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 6.3818076642362875,
+          "seed": 47,
+          "reused_existing_calculation": false,
+          "ci95": [
+            2.972085524883163,
+            2.9849485317754945
+          ],
+          "price_3p16_in_ci95": false
+        }
+      ]
+    },
+    {
+      "label": "literal_printed_intercept_daily_variance_interpretation",
+      "description": "Interpret 0.01% literally as omega=0.0001 in daily decimal variance units, together with other printed coefficients and the retained initial variance. This is a hypothetical unit interpretation, not an asserted meaning of the paper.",
+      "parameters": {
+        "mu": 0.0006,
+        "omega": 0.0001,
+        "alpha": 0.11,
+        "gamma": 0.2,
+        "beta": 0.78,
+        "initial_variance": 2.6083121124996644e-05
+      },
+      "estimates": [
+        {
+          "price": 14.383069110219141,
+          "standard_error": 0.010016607305539705,
+          "paths": 2000000,
+          "put_price": 14.378089817221879,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.5833703196339,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.00464274937988,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 238,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 128371.9973833816,
+          "seed": 46,
+          "reused_existing_calculation": false,
+          "ci95": [
+            14.363436559900283,
+            14.402701660538
+          ],
+          "price_3p16_in_ci95": false
+        },
+        {
+          "price": 14.392753573229415,
+          "standard_error": 0.01002954193187669,
+          "paths": 2000000,
+          "put_price": 14.387774280232152,
+          "parity_term": 0.004979292997262519,
+          "estimator_note": "Bounded final-period conditional put plus put-call parity; price SE equals antithetic put-pair SE",
+          "bound_stats": {
+            "lower": 0.0,
+            "upper": 99.5833703196339,
+            "sample_min": 0.0,
+            "sample_max": 99.5833703196339,
+            "violations": 0
+          },
+          "antithetic_pairs": 1000000,
+          "discounted_dividend_stock_mean": 100.00140243384355,
+          "final_period_integrated_analytically": true,
+          "simulated_periods": 62,
+          "absorbed_numerically_zero_stock_paths": 225,
+          "paths_dropped": 0,
+          "variance_clipped": false,
+          "max_live_variance": 121106.15429210334,
+          "seed": 47,
+          "reused_existing_calculation": false,
+          "ci95": [
+            14.373095671042936,
+            14.412411475415894
+          ],
+          "price_3p16_in_ci95": false
+        }
+      ]
+    }
+  ]
+}

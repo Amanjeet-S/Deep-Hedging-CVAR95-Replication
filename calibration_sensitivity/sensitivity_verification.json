@@ -1,0 +1,51 @@
+{
+  "author": "Amanjeet Singh",
+  "verified": true,
+  "scenario_count": 3,
+  "policy_rows": 5,
+  "initial_capital_all": 3.16,
+  "all_terminal_arrays_finite": true,
+  "maximum_wealth_identity_error": 5.684341886080802e-14,
+  "minimum_cash_float64": -100.00005110460842,
+  "decomposition_identity_max_error": 0.0,
+  "cases": [
+    {
+      "name": "observed_forecast",
+      "initial_conditional_delta": {
+        "spot": 100.0,
+        "initial_variance": 2.6666335467727468e-05,
+        "remaining_days": 63,
+        "estimate": 0.5651404962821638
+      },
+      "policies": [
+        "fixed_baseline_weights"
+      ]
+    },
+    {
+      "name": "price_compatible",
+      "initial_conditional_delta": {
+        "spot": 100.0,
+        "initial_variance": 7.75e-05,
+        "remaining_days": 63,
+        "estimate": 0.5690238526779257
+      },
+      "policies": [
+        "fixed_baseline_weights",
+        "retrained"
+      ]
+    },
+    {
+      "name": "scaled_fit",
+      "initial_conditional_delta": {
+        "spot": 100.0,
+        "initial_variance": 2.5662900771582957e-05,
+        "remaining_days": 63,
+        "estimate": 0.567857981426112
+      },
+      "policies": [
+        "fixed_baseline_weights",
+        "retrained"
+      ]
+    }
+  ]
+}

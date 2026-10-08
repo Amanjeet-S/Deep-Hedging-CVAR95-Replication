@@ -1,0 +1,93 @@
+{
+  "dataset": "data/SP500_random.csv",
+  "date_slice_first_row_before_return": "31/12/15",
+  "first_return_date": "04/01/16",
+  "last_return_date": "31/12/20",
+  "n_returns": 1259,
+  "sample_mean_daily": 0.00048331527187190824,
+  "sample_sd_daily_ddof1": 0.012180676233628916,
+  "sample_sd_annual_ddof1": 0.19336224068866203,
+  "last_log_return": 0.006418204632772233,
+  "authors_unscaled_fit": {
+    "return_scale_before_fit": 1,
+    "model": "Constant-mean Gaussian GJR-GARCH(1,1), arch_model(...p=1,o=1,q=1,rescale=False)",
+    "params_decimal_returns": {
+      "mu": 0.0006252906867408154,
+      "omega": 2.965710904850983e-06,
+      "alpha[1]": 0.1000004458628082,
+      "gamma[1]": 0.19999943438148582,
+      "beta[1]": 0.7799996137183315
+    },
+    "params_estimation_units": {
+      "mu": 0.0006252906867408154,
+      "omega": 2.965710904850983e-06,
+      "alpha[1]": 0.1000004458628082,
+      "gamma[1]": 0.19999943438148582,
+      "beta[1]": 0.7799996137183315
+    },
+    "initial_fitted_variance_h0": 2.6083121124996644e-05,
+    "initial_fitted_sigma_daily": 0.00510716370650057,
+    "initial_fitted_sigma_annual": 0.08107371043377226,
+    "last_fitted_residual": 0.005792913946031418,
+    "next_variance_forecast_from_observed_last_residual": 2.6666335467727468e-05,
+    "persistence": 0.9799997767718827,
+    "stationary_variance_if_exists": 0.00014828389018586724,
+    "loglikelihood_in_estimation_units": 4298.041204604756,
+    "convergence_flag": 0,
+    "optimization_success": true,
+    "optimization_message": "Optimization terminated successfully",
+    "optimization_iterations": 8,
+    "warnings": [],
+    "loglikelihood_in_decimal_return_units": 4298.041204604756
+  },
+  "scaled_conditioning_control": {
+    "return_scale_before_fit": 100,
+    "model": "Constant-mean Gaussian GJR-GARCH(1,1), arch_model(...p=1,o=1,q=1,rescale=False)",
+    "params_decimal_returns": {
+      "mu": 0.0006821386109908009,
+      "omega": 3.840432081072945e-06,
+      "alpha[1]": 0.14730967126585198,
+      "gamma[1]": 0.23069956417594623,
+      "beta[1]": 0.7207770282209127
+    },
+    "params_estimation_units": {
+      "mu": 0.06821386109908009,
+      "omega": 0.038404320810729455,
+      "alpha[1]": 0.14730967126585198,
+      "gamma[1]": 0.23069956417594623,
+      "beta[1]": 0.7207770282209127
+    },
+    "initial_fitted_variance_h0": 2.5662900771582957e-05,
+    "initial_fitted_sigma_daily": 0.00506585637099819,
+    "initial_fitted_sigma_annual": 0.08041797681140023,
+    "last_fitted_residual": 0.005736066021781432,
+    "next_variance_forecast_from_observed_last_residual": 2.7184511029855235e-05,
+    "persistence": 0.9834364815747377,
+    "stationary_variance_if_exists": 0.00023186088743171938,
+    "loglikelihood_in_estimation_units": -1497.1197268249298,
+    "convergence_flag": 0,
+    "optimization_success": true,
+    "optimization_message": "Optimization terminated successfully",
+    "optimization_iterations": 12,
+    "warnings": [],
+    "loglikelihood_in_decimal_return_units": 4300.789537334078
+  },
+  "library_versions": {
+    "arch": "8.0.0",
+    "numpy": "2.3.5",
+    "scipy": "1.18.1",
+    "pandas": "2.2.3"
+  },
+  "python_version": "3.12.14",
+  "selected_parameters": {
+    "mu": 0.0006252906867408154,
+    "omega": 2.965710904850983e-06,
+    "alpha": 0.1000004458628082,
+    "gamma": 0.19999943438148582,
+    "beta": 0.7799996137183315,
+    "initial_variance": 2.6666335467727468e-05
+  },
+  "selection_note": "Only the known first-return variance is replaced by the observed-residual one-step forecast. No policy retraining or selection on hedging losses.",
+  "author": "Amanjeet Singh",
+  "scenario_label": "observed-residual initial-variance sensitivity; fixed baseline policy only"
+}

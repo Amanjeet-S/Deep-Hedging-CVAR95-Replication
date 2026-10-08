@@ -1,0 +1,110 @@
+{
+  "author": "Amanjeet Singh",
+  "measure": "physical",
+  "dates": "Decision dates 0 through 62 supply the variances for returns 1 through 63; date63 is a post-horizon diagnostic.",
+  "moment_derivation": {
+    "A": "beta+(alpha+gamma*1{Z<0})*Z^2, Z standard normal independent of current variance",
+    "normal_moments": "E[Z^2]=1; E[Z^2*1{Z<0}]=1/2; E[Z^4]=3; E[Z^4*1{Z<0}]=3/2",
+    "psi": "E[A]=beta+alpha+gamma/2",
+    "chi": "E[A^2]=beta^2+2*beta*(alpha+gamma/2)+3*(alpha^2+alpha*gamma+gamma^2/2)",
+    "m1": "m1_next=omega+psi*m1; m1_0=h0",
+    "m2": "m2_next=omega^2+2*omega*psi*m1+chi*m2; m2_0=h0^2",
+    "closed_form_m1": "m1_t=psi^t*h0+omega*(1-psi^t)/(1-psi), with m1_t=h0+t*omega when psi=1",
+    "coupled_mean_difference": "For identical coefficients and initial-state difference delta_h0, delta_m1_t=psi^t*delta_h0",
+    "rms": "annualised_RMS_volatility=sqrt(252*mean(m1_0,...,m1_62))"
+  },
+  "scenarios": {
+    "baseline_fitted_state": {
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315,
+        "initial_variance": 2.6083121124996644e-05
+      },
+      "psi": 0.9799997767718827,
+      "chi": 1.0703995232305195,
+      "mean_variance_over_63_returns": 7.846056785344996e-05,
+      "annualised_rms_volatility": 0.14061316829895196,
+      "mean_variance_at_date63": 0.00011406148921515643,
+      "second_variance_moment_at_date63": 3.671110835249101e-07,
+      "closed_form_mean_max_error": 1.3552527156068805e-19,
+      "stationary_mean_variance_if_psi_less_than_one": 0.00014828389018586724,
+      "finite_stationary_second_moment_condition_met": false
+    },
+    "observed_last_residual_forecast": {
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315,
+        "initial_variance": 2.6666335467727468e-05
+      },
+      "psi": 0.9799997767718827,
+      "chi": 1.0703995232305195,
+      "mean_variance_over_63_returns": 7.879380604298293e-05,
+      "annualised_rms_volatility": 0.1409114584511554,
+      "mean_variance_at_date63": 0.00011422481875262329,
+      "second_variance_moment_at_date63": 3.720618570022621e-07,
+      "closed_form_mean_max_error": 1.4907779871675686e-19,
+      "stationary_mean_variance_if_psi_less_than_one": 0.00014828389018586724,
+      "finite_stationary_second_moment_condition_met": false
+    },
+    "illustrative_price_compatible_initial_variance": {
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315,
+        "initial_variance": 7.75e-05
+      },
+      "psi": 0.9799997767718827,
+      "chi": 1.0703995232305195,
+      "mean_variance_over_63_returns": 0.00010783924799275354,
+      "annualised_rms_volatility": 0.16484990292436902,
+      "mean_variance_at_date63": 0.00012846081795134741,
+      "second_variance_moment_at_date63": 9.93531597113329e-07,
+      "closed_form_mean_max_error": 1.6263032587282567e-19,
+      "stationary_mean_variance_if_psi_less_than_one": 0.00014828389018586724,
+      "finite_stationary_second_moment_condition_met": false
+    },
+    "percentage_return_conditioning_fit_terminal_state": {
+      "parameters": {
+        "mu": 0.0006821386109908009,
+        "omega": 3.840432081072945e-06,
+        "alpha": 0.14730967126585198,
+        "gamma": 0.23069956417594623,
+        "beta": 0.7207770282209127,
+        "initial_variance": 2.5662900771582957e-05
+      },
+      "psi": 0.9834364815747377,
+      "chi": 1.1450440068475887,
+      "mean_variance_over_63_returns": 0.00010325256317796168,
+      "annualised_rms_volatility": 0.16130606287689978,
+      "mean_variance_at_date63": 0.00015986590072199412,
+      "second_variance_moment_at_date63": 1.6231272121634943e-05,
+      "closed_form_mean_max_error": 2.168404344971009e-19,
+      "stationary_mean_variance_if_psi_less_than_one": 0.00023186088743171938,
+      "finite_stationary_second_moment_condition_met": false
+    }
+  },
+  "initial_state_checks": {
+    "observed_last_residual_forecast": {
+      "initial_variance_difference": 5.832143427308246e-07,
+      "max_error_in_psi_power_difference": 3.3881317890172014e-20,
+      "mean_variance_difference_over_63_returns": 3.3323818953299557e-07,
+      "date63_mean_variance_difference": 1.6332953746685881e-07
+    },
+    "illustrative_price_compatible_initial_variance": {
+      "initial_variance_difference": 5.1416878875003356e-05,
+      "max_error_in_psi_power_difference": 1.0842021724855044e-19,
+      "mean_variance_difference_over_63_returns": 2.9378680139303597e-05,
+      "date63_mean_variance_difference": 1.4399328736190988e-05
+    }
+  },
+  "csv": "physical_variance_moments.csv",
+  "interpretation": "These are exact physical conditional-variance moment recursions for deterministic initial variance, not risk-neutral implied volatilities or proofs of hedge-loss moments. Finite-horizon variance moments can exist even when stock or option-payoff moments fail. A chi at least one rules out a finite stationary variance second moment; it does not make these finite-date recursions infinite."
+}

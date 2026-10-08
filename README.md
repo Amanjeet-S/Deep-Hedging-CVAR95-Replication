@@ -49,6 +49,42 @@ python panel_b.py train --confidence 90 --folder panel_b_retrained
 python panel_b.py evaluate --folder panel_b_retrained --capital-control --full-range
 ```
 
+## Calibration and initial variance
+
+I tested the observed-residual forecast, a predefined initial state that prices the option near 3.16, and the percentage-unit likelihood fit. Initial capital remains **3.16** in every training and evaluation. The two new 95% policies complete 50 epochs and use validation-selected checkpoints; all test comparisons share the same 100,000 innovations.
+
+| Setup | Call price, seed 46 | Deep CVaR95 | Delta CVaR95 | Gap |
+|---|---:|---:|---:|---:|
+| Published reference | 3.160 | 3.481 | 3.562 | −0.081 |
+| Retained baseline | 2.770068 | 2.884726 | 2.959946 | −0.075220 |
+| Observed forecast, baseline weights | 2.775015 | 2.900073 | 2.973967 | −0.073895 |
+| Price-compatible state, retrained | 3.160828 | 4.010514 | 4.125525 | −0.115011 |
+| Scaled fit, retrained | 3.052934 | 4.353688 | 4.429238 | −0.075551 |
+
+The forecasting convention changes price by about 0.005. Aligning the option price does not recover the published hedging risk. The scaled fit moves both standalone risks together while leaving their gap close to the baseline. These are predefined sensitivity experiments; they do not identify the original published calibration.
+
+[Risk comparison](calibration_sensitivity/calibration_risk_comparison.png) · [Physical variance moments](calibration_sensitivity/calibration_variance_moments.png) · [95% profit distributions](calibration_sensitivity/calibration_overlay_comparison.png)
+
+Holding the baseline weights fixed in the price-compatible market raises deep CVaR by **1.351115**; retraining reduces it by **0.225326**, leaving a total change **1.125789**. The corresponding scaled-fit effects are **1.570174**, **−0.101212**, and **1.468962**. Fixed weights do not imply fixed positions when market and wealth inputs change.
+
+Five admissible optimisation starts in percentage-return units agree within 4.3×10⁻¹¹ in log likelihood. Independent 500,000-path conditional-delta checks agree with the initial grid values within **0.334** and **0.798** sampling standard errors. All five evaluated policy rows pass accounting, finite-outcome and borrowing checks. The intervals remain empirical plug-in diagnostics with unestablished population coverage.
+
+The public implementation's archived GJR file records price **3.157065** and 95% deep CVaR **3.024906**, which also differ from the published table. It does not retain the full-precision calibration, initial state or model weights. Directly stored archived values are distinguished from the paper and the independent simulations.
+
+The complete inputs, selected weights, histories, terminal arrays, price diagnostics and numerical checks are in `calibration_sensitivity/`. To reproduce the two retrained controls in a new directory:
+
+```sh
+python calibration_sensitivity.py --folder sensitivity_retrained --prepare-only
+python replication.py --calibration sensitivity_retrained/price_compatible/calibration.json --folder sensitivity_retrained/price_compatible/run95 --epochs 50 --device cpu
+python replication.py --calibration sensitivity_retrained/scaled_fit/calibration.json --folder sensitivity_retrained/scaled_fit/run95 --epochs 50 --device cpu
+python calibration_sensitivity.py --folder sensitivity_retrained
+python calibration_plots.py --folder calibration_sensitivity
+python independent_diagnostics.py --root . --folder diagnostic_rerun
+python delta_sensitivity_mc.py --folder calibration_sensitivity
+```
+
+The delta grids are rebuilt in memory; an optional matching fine cache can accelerate the raw-coefficient cases. The calibration controls do not replace baseline or Panel B files.
+
 ## Method
 
 The Gaussian GJR-GARCH model uses the known conditional variance of the **next return** at each decision. The selected raw-return fit uses 1,259 daily returns from 4 January 2016 to 31 December 2020. Its exact coefficients and the rescaled conditioning check are in [calibration.json](calibration.json).
@@ -57,7 +93,7 @@ The policy has four hidden layers of 56 ReLU units, Glorot initialisation and Ad
 
 Delta is computed by stock-numeraire Gaussian quadrature and interpolation, with an analytic final-day value and a wider grid for large variance states. [Validation](delta_validation.json) compares it with independent conditional Monte Carlo. This differs from the paper's nested Monte Carlo implementation.
 
-The bounded put estimator and put–call parity give an initial call price of **2.770068**, using two million paths. A separate [price audit](stable_price_matching_audit.json) with the same coefficients and initial variance 0.0000775 gives **3.160828** and **3.161292** under two seeds. This illustrates compatibility with 3.16; that variance was not used for training and does not recover the original state.
+The bounded put estimator and put–call parity give an initial call price of **2.770068**, using two million paths. A separate [price audit](stable_price_matching_audit.json) with the same coefficients and initial variance 0.0000775 gives **3.160828** and **3.161292** under two seeds. This illustrates compatibility with 3.16; the baseline and Panel B retain the fitted initial state. The separate initial-variance sensitivity below uses this price-compatible state.
 
 ## Reproduce
 

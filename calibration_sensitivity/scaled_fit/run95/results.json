@@ -1,0 +1,164 @@
+{
+  "author": "Amanjeet Singh",
+  "policy": "retrained",
+  "metrics": [
+    {
+      "name": "Deep hedging CVaR95 loss",
+      "estimate": 4.353687513361226,
+      "standard_error": 0.06786282201674881,
+      "ci_low": 4.220676382208398,
+      "ci_high": 4.486698644514054,
+      "published": 3.481,
+      "difference": 0.8726875133612264
+    },
+    {
+      "name": "Deep minus delta CVaR95 loss",
+      "estimate": -0.075550768777922,
+      "standard_error": 0.04982545580937456,
+      "ci_low": -0.17320866216429615,
+      "ci_high": 0.02210712460845214,
+      "published": -0.081,
+      "difference": 0.005449231222078008
+    },
+    {
+      "name": "Difference strategy CVaR95 loss",
+      "estimate": 2.131628503733763,
+      "standard_error": 0.035481136852583244,
+      "ci_low": 2.0620854755026996,
+      "ci_high": 2.201171531964826,
+      "published": 1.81,
+      "difference": 0.3216285037337627
+    },
+    {
+      "name": "Difference strategy mean P&L",
+      "estimate": -0.26897911385542883,
+      "standard_error": 0.0039644028003386735,
+      "ci_low": -0.2767493433440926,
+      "ci_high": -0.26120888436676504,
+      "published": -0.254,
+      "difference": -0.014979113855428827
+    }
+  ],
+  "config": {
+    "maturity": 63,
+    "spot": 100.0,
+    "strike": 100.0,
+    "r": 0.0167,
+    "q": 0.0165,
+    "confidence": 0.95,
+    "borrowing_limit": 100.0,
+    "training_paths": 400000,
+    "validation_paths": 50000,
+    "test_paths": 100000,
+    "epochs": 50,
+    "batch_size": 1000,
+    "learning_rate": 0.0005,
+    "training_seed": 43,
+    "validation_seed": 44,
+    "test_seed": 45,
+    "model_seed": 4301,
+    "price_seed": 46,
+    "initial_capital": 3.16
+  },
+  "parameters": {
+    "mu": 0.0006821386109908009,
+    "omega": 3.840432081072945e-06,
+    "alpha": 0.14730967126585198,
+    "gamma": 0.23069956417594623,
+    "beta": 0.7207770282209127,
+    "initial_variance": 2.5662900771582957e-05
+  },
+  "policy_training_parameters": {
+    "mu": 0.0006821386109908009,
+    "omega": 3.840432081072945e-06,
+    "alpha": 0.14730967126585198,
+    "gamma": 0.23069956417594623,
+    "beta": 0.7207770282209127,
+    "initial_variance": 2.5662900771582957e-05
+  },
+  "best_epoch": 50,
+  "best_validation_cvar": 4.3560520351409915,
+  "delta_cvar": 4.429238282139148,
+  "delta_standard_error": 0.0542805582933477,
+  "delta_confidence_interval": [
+    4.322848387884187,
+    4.53562817639411
+  ],
+  "checks": {
+    "overlay_identity_max_error": 5.684341886080802e-14,
+    "hedging_loss_identity_max_error": 5.684341886080802e-14,
+    "torch_vs_float64_wealth_max_error": 2.7164400336232575e-05,
+    "minimum_cash_float64": -100.0000463258646,
+    "minimum_cash_torch": -100.00001525878906,
+    "borrowing_limit_tolerance": 0.001,
+    "finite_test_losses": true,
+    "finite_overlay_and_positions": true,
+    "training_test_distinct_seeds": true,
+    "validation_test_distinct_seeds": true
+  },
+  "overlay_quantiles": {
+    "0.001": -8.317842328191979,
+    "0.01": -2.0002994661525904,
+    "0.05": -1.4245083534625962,
+    "0.5": -0.4884708266338712,
+    "0.95": 1.595420894404103,
+    "0.99": 2.4937988757153398,
+    "0.999": 6.679696199966118
+  },
+  "overlay_range": [
+    -47.41709400933666,
+    41.01444705915399
+  ],
+  "outside_central_plot": 406,
+  "statistical_arbitrage_criterion_met": false,
+  "conditional_uncertainty_note": "Intervals are empirical plug-in estimates conditional on the selected policies and models. Paired decomposition estimates use common market innovations from seed 45 and exclude calibration, repeat-training and delta-grid uncertainty. Required influence-function moments and normal population coverage have not been established.",
+  "delta_grid": {
+    "method": "stock-numeraire Gaussian quadrature with bilinear interpolation",
+    "params": {
+      "mu": 0.0006821386109908009,
+      "omega": 3.840432081072945e-06,
+      "alpha": 0.14730967126585198,
+      "beta": 0.7207770282209127,
+      "gamma": 0.23069956417594623,
+      "r": 0.0167,
+      "q": 0.0165,
+      "trading_days": 252
+    },
+    "config": {
+      "x_min": -1.5,
+      "x_max": 1.5,
+      "nx": 4801,
+      "logh_min": -12,
+      "logh_max": -1,
+      "nh": 221,
+      "quadrature_nodes": 48,
+      "dtype": "float32"
+    },
+    "build_seconds": 167.19829362499877,
+    "evaluations": 6200001,
+    "variance_clamps": 0,
+    "moneyness_clamps": 39,
+    "probability_min": 0.0,
+    "probability_max": 1.0,
+    "monotonicity_min_diff": 0.0,
+    "tail_refinement_threshold": 0.01,
+    "tail_grid_config": {
+      "x_min": -4,
+      "x_max": 4,
+      "nx": 1601,
+      "logh_min": -12,
+      "logh_max": 3,
+      "nh": 301,
+      "quadrature_nodes": 48,
+      "dtype": "float32"
+    },
+    "evaluation_counter_scope": "Cumulative across scenarios sharing this in-memory coefficient grid."
+  },
+  "scenario_label": "unit-scaled likelihood sensitivity, not recovered original calibration",
+  "initial_conditional_delta": {
+    "spot": 100.0,
+    "initial_variance": 2.5662900771582957e-05,
+    "remaining_days": 63,
+    "estimate": 0.567857981426112
+  }
+}

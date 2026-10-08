@@ -1,0 +1,134 @@
+{
+  "author": "Amanjeet Singh",
+  "purpose": "Two independent conditional-delta accuracy diagnostics for calibration sensitivities; these are not global error bounds.",
+  "stock_numeraire_identity": "Delta=e^(-q*tau/252) Q^S(ST>K); Z=sqrt(h)+u under Q^S with u standard normal; the shifted GJR variance transition is retained.",
+  "cases": [
+    {
+      "case": "raw_coefficients_price_compatible_initial_variance",
+      "parameters": {
+        "mu": 0.0006252906867408154,
+        "omega": 2.965710904850983e-06,
+        "alpha": 0.1000004458628082,
+        "gamma": 0.19999943438148582,
+        "beta": 0.7799996137183315,
+        "initial_variance": 7.75e-05
+      },
+      "state": {
+        "spot": 100.0,
+        "strike": 100.0,
+        "days": 63
+      },
+      "rates": {
+        "r": 0.0167,
+        "q": 0.0165
+      },
+      "estimate": 0.568805669801152,
+      "standard_error": 0.0006535069929135896,
+      "ci95": [
+        0.5675247960950414,
+        0.5700865435072626
+      ],
+      "sample_size": 500000,
+      "delta_bound": [
+        0.0,
+        0.9958834961263117
+      ],
+      "verified": true,
+      "method": "stock-numeraire conditional Monte Carlo with analytic last-day integration",
+      "seed": 70461,
+      "rng": "NumPy default_rng (PCG64)",
+      "rng_draw_order": "50,000-path blocks; independent normals by date within each block",
+      "maximum_block_paths": 50000,
+      "simulated_periods": 62,
+      "last_day_integrated_analytically": true,
+      "paths_dropped": 0,
+      "variance_clipped": false,
+      "pathwise_classifications": 0,
+      "maximum_simulated_variance": 0.20004686241472053,
+      "seconds": 0.3389302499999758,
+      "grid_delta": 0.5690238526779257,
+      "grid_minus_mc": 0.00021818287677366488,
+      "difference_in_mc_standard_errors": 0.33386463976601133,
+      "grid_configuration": {
+        "x_min": -1.5,
+        "x_max": 1.5,
+        "nx": 4801,
+        "logh_min": -12.0,
+        "logh_max": -1.0,
+        "nh": 221,
+        "quadrature_nodes": 48,
+        "surface_storage": "float32",
+        "component": "fine",
+        "tail_substitution": false
+      }
+    },
+    {
+      "case": "scaled_fit_fitted_initial_variance",
+      "parameters": {
+        "mu": 0.0006821386109908009,
+        "omega": 3.840432081072945e-06,
+        "alpha": 0.14730967126585198,
+        "gamma": 0.23069956417594623,
+        "beta": 0.7207770282209127,
+        "initial_variance": 2.5662900771582957e-05
+      },
+      "state": {
+        "spot": 100.0,
+        "strike": 100.0,
+        "days": 63
+      },
+      "rates": {
+        "r": 0.0167,
+        "q": 0.0165
+      },
+      "estimate": 0.5673397092961135,
+      "standard_error": 0.0006498561859249672,
+      "ci95": [
+        0.5660659911717006,
+        0.5686134274205265
+      ],
+      "sample_size": 500000,
+      "delta_bound": [
+        0.0,
+        0.9958834961263117
+      ],
+      "verified": true,
+      "method": "stock-numeraire conditional Monte Carlo with analytic last-day integration",
+      "seed": 70462,
+      "rng": "NumPy default_rng (PCG64)",
+      "rng_draw_order": "50,000-path blocks; independent normals by date within each block",
+      "maximum_block_paths": 50000,
+      "simulated_periods": 62,
+      "last_day_integrated_analytically": true,
+      "paths_dropped": 0,
+      "variance_clipped": false,
+      "pathwise_classifications": 0,
+      "maximum_simulated_variance": 0.8790495543154986,
+      "seconds": 0.3356089590015472,
+      "grid_delta": 0.567857981426112,
+      "grid_minus_mc": 0.0005182721299984427,
+      "difference_in_mc_standard_errors": 0.7975181912914541,
+      "grid_configuration": {
+        "x_min": -1.5,
+        "x_max": 1.5,
+        "nx": 4801,
+        "logh_min": -12.0,
+        "logh_max": -1.0,
+        "nh": 221,
+        "quadrature_nodes": 48,
+        "surface_storage": "float32",
+        "component": "fine",
+        "tail_substitution": false
+      }
+    }
+  ],
+  "summary": {
+    "all_cases_verified": true,
+    "maximum_absolute_difference_in_mc_standard_errors": 0.7975181912914541,
+    "all_paths_retained": true,
+    "variance_clipped": false,
+    "numerical_explosions": 0,
+    "classifications_used": 0,
+    "scope": "Two initial-state comparisons; no global numerical error bound is established."
+  }
+}

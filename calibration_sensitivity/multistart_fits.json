@@ -1,0 +1,301 @@
+{
+  "author": "Amanjeet Singh",
+  "method": "Constant-mean Gaussian GJR-GARCH(1,1), percentage returns, ARCH constrained SLSQP",
+  "data": "data/SP500_random.csv",
+  "sample_count": 1259,
+  "first_return_date": "04/01/16",
+  "last_return_date": "31/12/20",
+  "optimizer_options": {
+    "ftol": 1e-10,
+    "maxiter": 1000
+  },
+  "versions": {
+    "python": "3.12.14",
+    "arch": "8.0.0",
+    "numpy": "2.3.5",
+    "scipy": "1.18.1",
+    "pandas": "2.2.3"
+  },
+  "stored_default_scaled_fit": {
+    "return_scale_before_fit": 100,
+    "model": "Constant-mean Gaussian GJR-GARCH(1,1), arch_model(...p=1,o=1,q=1,rescale=False)",
+    "params_decimal_returns": {
+      "mu": 0.0006821386109908009,
+      "omega": 3.840432081072945e-06,
+      "alpha[1]": 0.14730967126585198,
+      "gamma[1]": 0.23069956417594623,
+      "beta[1]": 0.7207770282209127
+    },
+    "params_estimation_units": {
+      "mu": 0.06821386109908009,
+      "omega": 0.038404320810729455,
+      "alpha[1]": 0.14730967126585198,
+      "gamma[1]": 0.23069956417594623,
+      "beta[1]": 0.7207770282209127
+    },
+    "initial_fitted_variance_h0": 2.5662900771582957e-05,
+    "initial_fitted_sigma_daily": 0.00506585637099819,
+    "initial_fitted_sigma_annual": 0.08041797681140023,
+    "last_fitted_residual": 0.005736066021781432,
+    "next_variance_forecast_from_observed_last_residual": 2.7184511029855235e-05,
+    "persistence": 0.9834364815747377,
+    "stationary_variance_if_exists": 0.00023186088743171938,
+    "loglikelihood_in_estimation_units": -1497.1197268249298,
+    "convergence_flag": 0,
+    "optimization_success": true,
+    "optimization_message": "Optimization terminated successfully",
+    "optimization_iterations": 12,
+    "warnings": [],
+    "loglikelihood_in_decimal_return_units": 4300.789537334078
+  },
+  "fits": [
+    {
+      "label": "library_default",
+      "supplied_start_percentage_units": null,
+      "parameter_order": [
+        "mu",
+        "omega",
+        "alpha",
+        "gamma",
+        "beta"
+      ],
+      "supplied_start_accepted": null,
+      "params_percentage_units": {
+        "mu": 0.06821366959370863,
+        "omega": 0.03840456828333202,
+        "alpha[1]": 0.14731512329638,
+        "gamma[1]": 0.23070076217742966,
+        "beta[1]": 0.7207741089194883
+      },
+      "params_decimal_returns": {
+        "mu": 0.0006821366959370862,
+        "omega": 3.840456828333202e-06,
+        "alpha": 0.14731512329638,
+        "gamma": 0.23070076217742966,
+        "beta": 0.7207741089194883
+      },
+      "loglikelihood_percentage_units": -1497.1197267978966,
+      "loglikelihood_decimal_units": 4300.789537361111,
+      "difference_from_stored_default_scaled_loglikelihood": 2.7032911020796746e-08,
+      "terminal_fitted_variance": 2.5662985886153788e-05,
+      "observed_residual_one_step_forecast": 2.7184704829408914e-05,
+      "last_fitted_residual": 0.005736067936835146,
+      "persistence": 0.9834396133045832,
+      "success": true,
+      "convergence_flag": 0,
+      "iterations": 13,
+      "function_evaluations": 92,
+      "message": "Optimization terminated successfully",
+      "warnings": [],
+      "seconds": 0.021304666996002197
+    },
+    {
+      "label": "retained_decimal_fit_converted_to_percentage_units",
+      "supplied_start_percentage_units": [
+        0.06252906867408153,
+        0.029657109048509833,
+        0.1000004458628082,
+        0.19999943438148582,
+        0.7799996137183315
+      ],
+      "parameter_order": [
+        "mu",
+        "omega",
+        "alpha",
+        "gamma",
+        "beta"
+      ],
+      "supplied_start_accepted": true,
+      "params_percentage_units": {
+        "mu": 0.06821370153327469,
+        "omega": 0.03840454316547924,
+        "alpha[1]": 0.14731534425096657,
+        "gamma[1]": 0.23070049715560603,
+        "beta[1]": 0.72077412707665
+      },
+      "params_decimal_returns": {
+        "mu": 0.0006821370153327469,
+        "omega": 3.840454316547924e-06,
+        "alpha": 0.14731534425096657,
+        "gamma": 0.23070049715560603,
+        "beta": 0.72077412707665
+      },
+      "loglikelihood_percentage_units": -1497.119726797854,
+      "loglikelihood_decimal_units": 4300.789537361154,
+      "difference_from_stored_default_scaled_loglikelihood": 2.7075657271780074e-08,
+      "terminal_fitted_variance": 2.5662988613876092e-05,
+      "observed_residual_one_step_forecast": 2.7184711479829566e-05,
+      "last_fitted_residual": 0.005736067617439487,
+      "persistence": 0.9834397199054196,
+      "success": true,
+      "convergence_flag": 0,
+      "iterations": 13,
+      "function_evaluations": 93,
+      "message": "Optimization terminated successfully",
+      "warnings": [],
+      "seconds": 0.010435333002533298
+    },
+    {
+      "label": "printed_coefficient_hybrid_in_percentage_units",
+      "supplied_start_percentage_units": [
+        0.06,
+        0.029657109048509833,
+        0.11,
+        0.2,
+        0.78
+      ],
+      "parameter_order": [
+        "mu",
+        "omega",
+        "alpha",
+        "gamma",
+        "beta"
+      ],
+      "supplied_start_accepted": true,
+      "params_percentage_units": {
+        "mu": 0.0682136952503732,
+        "omega": 0.03840453656656371,
+        "alpha[1]": 0.1473153131602495,
+        "gamma[1]": 0.23070047841742003,
+        "beta[1]": 0.7207741535458861
+      },
+      "params_decimal_returns": {
+        "mu": 0.000682136952503732,
+        "omega": 3.840453656656371e-06,
+        "alpha": 0.1473153131602495,
+        "gamma": 0.23070047841742003,
+        "beta": 0.7207741535458861
+      },
+      "loglikelihood_percentage_units": -1497.1197267978553,
+      "loglikelihood_decimal_units": 4300.789537361153,
+      "difference_from_stored_default_scaled_loglikelihood": 2.70747477770783e-08,
+      "terminal_fitted_variance": 2.5662987169723772e-05,
+      "observed_residual_one_step_forecast": 2.7184709541530978e-05,
+      "last_fitted_residual": 0.0057360676802685005,
+      "persistence": 0.9834397059148456,
+      "success": true,
+      "convergence_flag": 0,
+      "iterations": 13,
+      "function_evaluations": 91,
+      "message": "Optimization terminated successfully",
+      "warnings": [],
+      "seconds": 0.00993758300319314
+    },
+    {
+      "label": "diverse_lower_persistence",
+      "supplied_start_percentage_units": [
+        0.04,
+        0.08,
+        0.15,
+        0.1,
+        0.55
+      ],
+      "parameter_order": [
+        "mu",
+        "omega",
+        "alpha",
+        "gamma",
+        "beta"
+      ],
+      "supplied_start_accepted": true,
+      "params_percentage_units": {
+        "mu": 0.06821369475798357,
+        "omega": 0.03840454070709205,
+        "alpha[1]": 0.14731534871209914,
+        "gamma[1]": 0.23070051064691008,
+        "beta[1]": 0.7207741175897114
+      },
+      "params_decimal_returns": {
+        "mu": 0.0006821369475798357,
+        "omega": 3.840454070709205e-06,
+        "alpha": 0.14731534871209914,
+        "gamma": 0.23070051064691008,
+        "beta": 0.7207741175897114
+      },
+      "loglikelihood_percentage_units": -1497.119726797855,
+      "loglikelihood_decimal_units": 4300.789537361153,
+      "difference_from_stored_default_scaled_loglikelihood": 2.70747477770783e-08,
+      "terminal_fitted_variance": 2.566298701355807e-05,
+      "observed_residual_one_step_forecast": 2.718471009834601e-05,
+      "last_fitted_residual": 0.005736067685192398,
+      "persistence": 0.9834397216252656,
+      "success": true,
+      "convergence_flag": 0,
+      "iterations": 20,
+      "function_evaluations": 142,
+      "message": "Optimization terminated successfully",
+      "warnings": [],
+      "seconds": 0.014319082998554222
+    },
+    {
+      "label": "diverse_higher_persistence",
+      "supplied_start_percentage_units": [
+        0.1,
+        0.02,
+        0.05,
+        0.1,
+        0.86
+      ],
+      "parameter_order": [
+        "mu",
+        "omega",
+        "alpha",
+        "gamma",
+        "beta"
+      ],
+      "supplied_start_accepted": true,
+      "params_percentage_units": {
+        "mu": 0.06821369435308684,
+        "omega": 0.03840453332668439,
+        "alpha[1]": 0.14731531544495272,
+        "gamma[1]": 0.23070045823820873,
+        "beta[1]": 0.720774158218693
+      },
+      "params_decimal_returns": {
+        "mu": 0.0006821369435308684,
+        "omega": 3.840453332668439e-06,
+        "alpha": 0.14731531544495272,
+        "gamma": 0.23070045823820873,
+        "beta": 0.720774158218693
+      },
+      "loglikelihood_percentage_units": -1497.1197267978569,
+      "loglikelihood_decimal_units": 4300.789537361151,
+      "difference_from_stored_default_scaled_loglikelihood": 2.7072928787674755e-08,
+      "terminal_fitted_variance": 2.5662986394634395e-05,
+      "observed_residual_one_step_forecast": 2.7184708869133547e-05,
+      "last_fitted_residual": 0.005736067689241365,
+      "persistence": 0.9834397027827501,
+      "success": true,
+      "convergence_flag": 0,
+      "iterations": 15,
+      "function_evaluations": 104,
+      "message": "Optimization terminated successfully",
+      "warnings": [],
+      "seconds": 0.010497666997252963
+    }
+  ],
+  "summary": {
+    "all_successful": true,
+    "all_supplied_starts_accepted": true,
+    "queried_loglikelihood_range": [
+      4300.789537361111,
+      4300.789537361154
+    ],
+    "queried_loglikelihood_spread": 4.274625098332763e-11,
+    "largest_queried_loglikelihood_label": "retained_decimal_fit_converted_to_percentage_units",
+    "parameter_spreads_decimal_units": {
+      "mu": 3.193956606356921e-10,
+      "omega": 3.4956647629704254e-12,
+      "alpha": 2.2541571914613812e-07,
+      "gamma": 3.039392209303049e-07,
+      "beta": 4.929920460750026e-08
+    }
+  },
+  "interpretation": "Consistency across these starts is evidence about the queried likelihood solutions, not proof of a global maximum or recovery of the paper's calibration. No fitted candidate is selected by a published hedging statistic, and retained experiment parameters are unchanged.",
+  "relative_risk_formula_evidence": {
+    "source": "src/visualization/strategy_evaluation.py:219-234",
+    "formula": "cvar_bs=mean(sorted(delta_loss)[floor(a*n):]); cvar_dh=mean(sorted(deep_loss)[floor(a*n):]); Relative_CVaR=cvar_dh/cvar_bs",
+    "historical_csv_field": "Relative_metric",
+    "qualification": "The current cached writer explicitly defines a ratio under the name Relative_CVaR. The stored CSV uses a different header, Relative_metric; its mapping to this writer is not recorded. Any gap inferred from that historical column is conditional on this header mapping, not a directly stored or published gap."
+  }
+}

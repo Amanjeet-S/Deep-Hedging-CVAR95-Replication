@@ -38,7 +38,7 @@
 \hypersetup{pdftitle={An independent numerical reconstruction of the deep-hedging experiment},pdfauthor={Amanjeet Singh}}
 \title{An independent numerical reconstruction\\of the deep-hedging experiment}
 \author{Amanjeet Singh}
-\date{7 October 2026}
+\date{8 October 2026}
 \begin{document}
 \maketitle
 \vspace{-1.5em}
@@ -282,7 +282,7 @@ The 95\% normal interval is $[2.764235,2.775902]$. Independent bounded pair obse
 In evaluating \eqref{eq:lastput}, the asset-binary term is computed as $\exp(\log S-q\dt+\log\Phi(-d_1))$ using \texttt{log\_ndtr}, avoiding overflow multiplied by zero. Tiny negative round-off in put values is replaced by zero, and every result is checked against \eqref{eq:boundedput}. The recorded bound is $99.583370320$, with no violations. A path is absorbed only if the actual float64 evaluation of $\exp(\log S)$ underflows to zero; it retains the maximal discounted-strike put contribution. The main audit contains one such path. No path is dropped and no positive variance is clipped. The discounted dividend-adjusted stock sample mean is $100.000218172$; it is a diagnostic, not a proof of accuracy of a direct stock-payoff estimator.
 
 \subsection{An illustrative price-compatible variance}
-With all retained coefficients fixed, doubling $h_0$ gives a price near 2.978164, while quadrupling it gives 3.339455. Their Monte Carlo intervals are on opposite sides of 3.16. The illustrative state $h_0=7.75\times10^{-5}$ gives a price close to 3.16 with the same coefficients. Training retains the fitted variance in Table~\ref{tab:parameters}.
+With all retained coefficients fixed, doubling $h_0$ gives a price near 2.978164, while quadrupling it gives 3.339455. Their Monte Carlo intervals are on opposite sides of 3.16. The illustrative state $h_0=7.75\times10^{-5}$ gives a price close to 3.16 with the same coefficients. Baseline and Panel B training retain the fitted variance in Table~\ref{tab:parameters}.
 \begin{table}[htbp]
 \centering\small
 \caption{Initial-state price audit with the same retained coefficients. The first two rows form the numerical bracket; the last two are an illustrative state and an independent-seed check.}
@@ -1618,6 +1618,132 @@ $a$ & Source & DH CVaR & Delta CVaR & Gap & Overlay CVaR & Mean profit\\
 \end{figure}
 The numbers outside $[-5,5]$ are 85\%: 712, 90\%: 384, 95\%: 244. All outcomes are retained in the supplied terminal arrays. The independent curves and statistics do not exactly reproduce the published experiment.
 
+\subsection{Calibration and initial variance}
+I investigate the initial variance and numerical calibration while keeping initial capital 3.16, the 95\% objective, architecture and seeds fixed. The two new policies complete 50 epochs on 400,000 training and 50,000 validation paths. Validation selects epoch 47 for the larger initial state and epoch 50 for the percentage-unit fit. All comparisons use 100,000 test paths with the same innovations as the retained baseline. Each market has its own conditional delta benchmark.
+
+The observed final return is $r_n=0.006418204633$. Its fitted residual and next-return variance follow directly from the GJR recursion:
+\begin{align}
+ u_n&=r_n-\mu=0.005792913946>0,\nonumber\\
+ h_{\rm next}&=\omega+(\alpha+\gamma\mathbf1_{\{u_n<0\}})u_n^2+\beta h_n\nonumber\\
+ &=\omega+\alpha u_n^2+\beta h_n
+ =2.666633546772747\times10^{-5}.
+\end{align}
+This is 2.236\% above the retained terminal fitted variance. I re-evaluate the baseline weights under this initial-state change. The price-compatible state $7.75\times10^{-5}$ was fixed by the earlier option-price comparison; I retrain its policy. I also retrain using the previously recorded percentage-unit likelihood fit. These choices precede the new hedging-loss evaluations.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Calibration sensitivities at confidence 0.95. Capital is 3.16 throughout. The forecast row uses the baseline weights; the other two controls use separately retrained policies. Prices use seed 46; independent seed-47 checks are retained.}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+Setup & Price & DH CVaR & Delta CVaR & Gap & Overlay CVaR & Mean profit\\
+\midrule
+Published & 3.160 & 3.481 & 3.562 & -0.081 & 1.810 & -0.254\\
+Baseline & 2.770068 & 2.884726 & 2.959946 & -0.075220 & 1.865054 & -0.262780\\
+Forecast & 2.775015 & 2.900073 & 2.973967 & -0.073895 & 1.869286 & -0.262345\\
+Price-compatible state & 3.160828 & 4.010514 & 4.125525 & -0.115011 & 2.329686 & -0.168131\\
+Scaled fit & 3.052934 & 4.353688 & 4.429238 & -0.075551 & 2.131629 & -0.268979\\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.96\linewidth,height=6.5cm,ybar,bar width=13pt,
+ ymin=0,ymax=5.3,xmin=-.7,xmax=3.7,
+ xtick={0,1,2,3},xticklabels={Baseline,Forecast,Price-aligned,Scaled fit},
+ ylabel={95\% loss CVaR},legend style={draw=none,font=\small,at={(.02,.98)},anchor=north west},
+ tick label style={font=\small},ymajorgrids=true,grid style={black!10}]
+\addplot[fill=plotblue,draw=plotblue] coordinates {(0,2.884725659)(1,2.900072669)(2,4.010514281)(3,4.353687513)};
+\addlegendentry{Deep hedge}
+\addplot[fill=plotslate,draw=plotslate] coordinates {(0,2.959945763)(1,2.973967205)(2,4.125525449)(3,4.429238282)};
+\addlegendentry{Delta hedge}
+\draw[red!65!black,dashed,thick] (axis cs:-.7,3.481)--(axis cs:3.7,3.481);
+\draw[purple!65!black,dotted,thick] (axis cs:-.7,3.562)--(axis cs:3.7,3.562);
+\end{axis}
+\end{tikzpicture}
+\caption{Calibration controls at capital 3.16. The forecast uses baseline weights; the two larger controls are retrained. Horizontal lines mark the published deep CVaR 3.481 and implied delta CVaR 3.562. These are empirical point estimates.}
+\label{fig:calibrationrisk}
+\end{figure}
+The forecasting convention changes the call value by about 0.005 and deep-hedging CVaR by 0.015347. The larger initial state prices the call near 3.16, but its retrained CVaR is 4.010514; the scaled-fit control gives 4.353688. Neither reproduces the published 3.481.
+
+To separate a change of market inputs from a change of weights, let $\rho_s(\theta)$ denote empirical 95\% loss CVaR for policy weights $\theta$ in scenario $s$. Write $\theta_0$ for the retained policy and $\theta_s$ for its retrained counterpart. Adding and subtracting the same quantity gives
+\begin{align}
+ \rho_s(\theta_s)-\rho_0(\theta_0)
+ &=\rho_s(\theta_s)-\rho_s(\theta_0)
+   +\rho_s(\theta_0)-\rho_0(\theta_0)\nonumber\\
+ &=B_s+A_s,\nonumber\\
+ A_s&=\rho_s(\theta_0)-\rho_0(\theta_0),\qquad
+ B_s=\rho_s(\theta_s)-\rho_s(\theta_0).
+\end{align}
+For the price-compatible state, $A_s=1.351115$, $B_s=-0.225326$, and the total change is 1.125789. For the scaled fit, the corresponding values are 1.570174, $-0.101212$ and 1.468962. Fixed weights still produce different positions because the market and evolving wealth inputs change. Most of the standalone-risk increase is present before retraining; retraining reduces it. This decomposition describes the controlled simulations and does not identify the original published calibration.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Independent price diagnostics, each using two million paths and the bounded conditional-put estimator. The last two rows are explicitly hybrid unit and coefficient checks.}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Input convention & Seed 46 & Seed 47\\
+\midrule
+Retained fitted state & 2.770068 & 2.770844\\
+Observed-residual forecast & 2.775015 & 2.775785\\
+Price-compatible initial state & 3.160828 & 3.161292\\
+Percentage-unit fit & 3.052934 & 3.054692\\
+Printed coefficients, retained intercept & 2.977228 & 2.978517\\
+Literal daily intercept $0.0001$ & 14.383069 & 14.392754\\
+\bottomrule
+\end{tabular}
+\end{table}
+The literal-intercept price is about 14.38. This tests one possible reading of the printed percentage, rather than establishing the paper's intended variance units. The hybrid coefficient check retains the fitted intercept and initial state while replacing only the printed mean, ARCH, leverage and GARCH coefficients.
+
+The five percentage-unit starts give log likelihood 4300.789537361 in decimal units. Their spread is below $4.3\times10^{-11}$. This is within $2.8\times10^{-8}$ of the earlier scaled fit and above the raw fit's 4298.041204605. I retain the predefined inputs for the sensitivity runs. Agreement of these starts supports numerical consistency without proving a global maximum or recovering the original fit.
+
+\subsubsection{Physical variance moments}
+Write $A(Z)=\beta+(\alpha+\gamma\mathbf1_{\{Z<0\}})Z^2$, so $h_{t+1}=\omega+A(Z_{t+1})h_t$. Standard-normal symmetry gives $\mathbb E[Z^2]=1$ and $\mathbb E[Z^2\mathbf1_{\{Z<0\}}]=1/2$. Since $\varphi'(z)=-z\varphi(z)$, integration by parts gives
+\[
+ \mathbb E[Z^4]=-\int_{\mathbb R}z^3\varphi'(z)\,dz
+ =3\int_{\mathbb R}z^2\varphi(z)\,dz=3,
+ \qquad \mathbb E[Z^4\mathbf1_{\{Z<0\}}]=\frac32.
+\]
+The Gaussian boundary term vanishes. Expanding the first two moments of $A$ yields
+\begin{align}
+ \psi:=\mathbb E[A]&=\beta+\alpha+\gamma/2,\nonumber\\
+ \chi:=\mathbb E[A^2]
+ &=\beta^2+2\beta\,\mathbb E[(\alpha+\gamma\mathbf1_{\{Z<0\}})Z^2]
+   +\mathbb E[(\alpha+\gamma\mathbf1_{\{Z<0\}})^2Z^4]\nonumber\\
+ &=\beta^2+2\beta(\alpha+\gamma/2)
+   +3\alpha^2+\tfrac32(2\alpha\gamma+\gamma^2).
+\end{align}
+Let $m_t=\mathbb E_{\Pp}[h_t]$ and $s_t=\mathbb E_{\Pp}[h_t^2]$. Independence of the next innovation and known current variance gives
+\begin{align}
+ m_{t+1}&=\omega+\psi m_t,\qquad m_0=h_0,\nonumber\\
+ s_{t+1}&=\mathbb E[\omega^2+2\omega A h_t+A^2h_t^2]
+          =\omega^2+2\omega\psi m_t+\chi s_t,
+          \qquad s_0=h_0^2.
+\end{align}
+Unrolling the first recursion and summing its geometric series gives
+\begin{align}
+ m_t&=\psi^t h_0+\omega\sum_{j=0}^{t-1}\psi^j
+     =\psi^t h_0+\frac{\omega(1-\psi^t)}{1-\psi}\nonumber\\
+ &=\bar h+\psi^t(h_0-\bar h),\qquad \bar h=\frac{\omega}{1-\psi},\nonumber\\
+ \frac1T\sum_{t=0}^{T-1}m_t
+ &=\bar h+(h_0-\bar h)\frac{1-\psi^T}{T(1-\psi)}.
+\end{align}
+With identical coefficients, changing only the initial variance gives $m_t'-m_t=\psi^t(h_0'-h_0)$. Thus the larger initial state affects variance throughout the horizon. Conditional Gaussianity also gives
+\[
+ \mathbb E_{\Pp}[(R_{t+1}-\mu)^4]
+ =\mathbb E[h_t^2\,\mathbb E[Z_{t+1}^4\mid\F_t]]=3s_t.
+\]
+The physical annualised RMS volatility is $\sqrt{252T^{-1}\sum_{t=0}^{T-1}m_t}$. It is 14.0613\% for the baseline, 14.0911\% for the observed forecast, 16.4850\% for the larger state and 16.1306\% for the scaled fit. The baseline has $(\psi,\chi)=(0.979999777,1.070399523)$; the scaled fit has $(0.983436482,1.145044007)$. Their mean-variance persistence is similar, while the second-moment recursion differs substantially.
+
+All finite-date moments in these recursions are finite. If a stationary second variance moment were finite, it would satisfy $(1-\chi)s=\omega^2+2\omega\psi\bar h>0$, requiring $\chi<1$. Neither coefficient set satisfies that condition. This does not establish hedge-loss moments; the qualification in Section~\ref{sec:moments} remains applicable. These physical variance quantities are distinct from the option prices calculated under $\Q$.
+
+\subsubsection{Numerical checks and public source comparison}
+The two new initial deltas are independently checked with 500,000 stock-measure paths and analytic final-day integration. Grid-minus-Monte-Carlo differences are 0.334 and 0.798 sampling standard errors for the larger initial state and scaled fit. These are initial-state diagnostics rather than global error bounds. All five evaluated policy rows retain finite terminal records and satisfy the borrowing test within its 0.001 tolerance. Accounting identity errors are below $5.7\times10^{-14}$, and the decomposition sums agree exactly.
+
+The public repository also contains GJR aggregate results in \texttt{metrics.csv}: its 95\% row records option price 3.157065, deep-hedging CVaR 3.024906, overlay CVaR 1.979994 and mean profit $-0.307759$. These values differ from the published table. The aggregate file does not store the fitted coefficients, initial variance or model weights. The source additionally uses an artificial initial residual and a different saved volatility timing; that procedure is distinct from the observed-residual forecast above.
+
+The nominal starting-capital check, forecast convention and two retraining controls do not reconcile the published standalone risk. The controls show that changing the market inputs moves both base risks together, while matching one option value leaves the joint path distribution and physical tail risk undetermined. A direct identification of the published run requires its full-precision calibration, initial state and trained policy.
+
 \section{A moment qualification}\label{sec:moments}
 \begin{proposition}[Infinite physical stock and call means]
 For the retained physical model, $\alpha>0$, $h_0>0$, $\beta\geq0$, $\omega\geq0$ and $\alpha+\gamma\geq0$. At any horizon $T\geq3$,
@@ -1729,6 +1855,22 @@ python panel_b.py evaluate --folder panel_b_retrained \
     --capital-control --full-range
 \end{verbatim}
 The recorded 85\% and 90\% checkpoints and histories are in \texttt{panel\_b/}; \texttt{panel\_b\_results.json} retains all three confidence-level comparisons. \texttt{capital\_audit.json} separates frozen-position accounting from feedback re-evaluation. The existing 95\% checkpoint supplies the third curve and the common delta benchmark.
+
+The calibration controls are prepared, retrained and evaluated with
+\begin{verbatim}
+python calibration_sensitivity.py --folder sensitivity_retrained --prepare-only
+python replication.py \
+    --calibration sensitivity_retrained/price_compatible/calibration.json \
+    --folder sensitivity_retrained/price_compatible/run95 \
+    --epochs 50 --device cpu
+python replication.py \
+    --calibration sensitivity_retrained/scaled_fit/calibration.json \
+    --folder sensitivity_retrained/scaled_fit/run95 \
+    --epochs 50 --device cpu
+python calibration_sensitivity.py --folder sensitivity_retrained
+python calibration_plots.py --folder calibration_sensitivity
+\end{verbatim}
+Recorded inputs, outcomes and diagnostics are in \texttt{calibration\_sensitivity/}. The retained baseline inputs and Panel B records are unchanged.
 
 \subsection{Versions, seeds and all inputs}
 Recorded numerical versions are NumPy~2.3.5, SciPy~1.18.1, pandas~2.2.3, ARCH~8.0.0, PyTorch~2.5.1 and matplotlib~3.11.2. The financial inputs are $S_0=K=100$, $T=63$, $\dt=1/252$, $r=0.0167$, $q=0.0165$, $a=0.95$, $B=100$, initial capital 3.16 and zero transaction costs. Exact GJR parameters are in Table~\ref{tab:parameters}. Network shape, precision, initialisation, learning rate, Adam settings, batch size and all 50 epochs are specified in Section~6. The shared network has 9,913 parameters; there is no active dropout or regularisation.

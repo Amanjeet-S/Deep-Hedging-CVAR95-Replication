@@ -13,3 +13,6 @@ panel_b_retrained/
 recalibration.json
 rerun-price-audit.json
 .DS_Store
+
+sensitivity_retrained/
+diagnostic_rerun/
