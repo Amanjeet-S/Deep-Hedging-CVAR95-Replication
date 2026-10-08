@@ -30,8 +30,10 @@ def plots(root, folder):
     def save(fig, stem, title):
         fig.savefig(folder / (stem + '.png'), dpi=220,
                     metadata={'Author': __author__, 'Title': title})
-        fig.savefig(folder / (stem + '.svg'),
+        svg=folder / (stem + '.svg')
+        fig.savefig(svg,
                     metadata={'Creator': __author__, 'Title': title})
+        svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines())+'\n')
         plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(9, 5.0))
