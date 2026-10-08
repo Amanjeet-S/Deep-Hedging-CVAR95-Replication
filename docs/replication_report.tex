@@ -43,7 +43,7 @@
 \maketitle
 \vspace{-1.5em}
 \section{Scope, notation and contract}
-I study the 95\% CVaR hedge for a 63-day European call under the paper's GJR--GARCH dynamics. I compare its hedging loss and the deep-minus-delta strategy with the published 95\% results, then extend the comparison to the 85\% and 90\% agents in Figure~1, Panel~B.
+I study the 95\% CVaR hedge for a 63-day European call under the paper's GJR--GARCH dynamics. I compare its hedging loss and the deep-minus-delta strategy with the published 95\% results, then extend the comparison to the 85\% and 90\% agents in Figure~1, Panel~B. I also examine the standalone hedging-profit distributions and their sample centres.
 
 Dates are $t=0,\ldots,T$, with $T=63$ and $\dt=1/252$ years. The stock price and strike are $S_0=K=100$, the continuously compounded annual risk-free rate is $r=0.0167$, and the dividend yield is $q=0.0165$. Write $c=(r-q)\dt$. The terminal call payoff is $H=(S_T-K)^+$. Both base hedges start with capital $V_0=3.16$, as reported in the paper, and incur no transaction costs. The neural strategy may borrow at most $B=100$ units of cash. Positions are chosen using information available at the decision date.
 
@@ -1618,6 +1618,121 @@ $a$ & Source & DH CVaR & Delta CVaR & Gap & Overlay CVaR & Mean profit\\
 \end{figure}
 The numbers outside $[-5,5]$ are 85\%: 712, 90\%: 384, 95\%: 244. All outcomes are retained in the supplied terminal arrays. The independent curves and statistics do not exactly reproduce the published experiment.
 
+\subsection{Standalone hedge distributions and centring}
+
+I extract the standalone outcomes from the same 100,000 physical test paths used for Panel B, with initial capital 3.16. For a short call, terminal net profit is hedge wealth after settling the payoff:
+\begin{align*}
+ \Pi_T^{(a)}&=V_T^{\rm DH,(a)}-H=-L^{\rm DH,(a)},
+ &\Pi_T^\Delta&=V_T^\Delta-H=-L^\Delta,\\
+ \Pi_T^{(a)}-\Pi_T^\Delta
+ &=V_T^{\rm DH,(a)}-H-V_T^\Delta+H
+ =V_T^{\rm DH,(a)}-V_T^\Delta=U_T^{(a)}.
+\end{align*}
+These are the complete hedged short-call positions. I retain their original sign and location; loss distributions are their reflections about zero.
+
+For observations $p_1,\ldots,p_n$, I calculate $\overline p=n^{-1}\sum_i p_i$. Order them as $p_{(1)}\leq\cdots\leq p_{(n)}$. For quantile level $b$, let $z=(n-1)b$, $j=\lfloor z\rfloor$ and $w=z-j$. Linear interpolation gives
+\[
+ \widehat q_b=(1-w)p_{(j+1)}+wp_{(\min(j+2,n))}.
+\]
+The median is consequently $(p_{(50,000)}+p_{(50,001)})/2$. The negative-profit fraction is $n^{-1}\sum_i\mathbf1_{\{p_i<0\}}$.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Standalone net profit on the common physical test sample. All 100,000 outcomes enter each statistic.}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Hedge & Mean & Median & 5th percentile & 95th percentile & Negative profit\\
+\midrule
+Deep (85\%) & 0.666066 & 0.785888 & -0.770513 & 2.159817 & 13.913\% \\
+Deep (90\%) & 0.488881 & 0.514722 & -0.992383 & 2.167698 & 26.009\% \\
+Deep (95\%) & 0.388896 & 0.399363 & -1.412509 & 2.251163 & 34.652\% \\
+Delta & 0.651676 & 0.971850 & -1.406855 & 1.690658 & 17.489\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All four sample means and medians are positive; none is centred at zero. The distributions are asymmetric. For the 95\% agent, the sample identity is
+\[
+ \overline\Pi_T^{(.95)}-\overline\Pi_T^\Delta
+ =0.388896465-0.651675992=-0.262779527
+ =\overline U_T^{(.95)}.
+\]
+The pathwise identity holds within $1.8\times10^{-15}$. All saved outcomes are finite. The observed standalone ranges are $[-61.256421,20.552935]$, $[-58.352098,19.954393]$, $[-57.973946,12.486723]$ and $[-38.283843,2.484203]$ for the three deep hedges and delta. These are sample ranges, not bounds on possible outcomes.
+
+For edges $b_j=-5+0.1j$, I count $N_j=\sum_i\mathbf1_{\{b_{j-1}\leq p_i<b_j\}}$, including the last upper endpoint. The histogram height is $N_j/(100,000\times0.1)$. Its central area is the fraction within the displayed range. The respective counts outside $[-5,5]$ are 945, 618, 534 and 527. All observations remain in the numerical summaries and complete empirical distributions.
+\begin{figure}[htbp]
+\centering
+% Author: Amanjeet Singh
+% Requires tikz and pgfplots.
+\definecolor{standDeepA}{HTML}{1F77B4}
+\definecolor{standDeepB}{HTML}{17BECF}
+\definecolor{standDeepC}{HTML}{279E68}
+\definecolor{standDelta}{HTML}{D97925}
+\begin{tikzpicture}
+\begin{axis}[name=standdeep,width=.475\linewidth,height=5.4cm,xmin=-5,xmax=5,ymin=0,ymax=0.84896,xlabel={Terminal net hedge P\&L},grid=major,grid style={gray!15},tick label style={font=\scriptsize},label style={font=\small},title style={font=\small},legend style={font=\scriptsize,draw=none,fill=none,at={(0.02,0.98)},anchor=north west},title={Deep hedges},ylabel={Full-sample empirical density}]
+\addplot[const plot,no marks,color=standDeepA,line width=.9pt] coordinates {(-5,0.0024) (-4.9,0.0021) (-4.8,0.0019) (-4.7,0.0032) (-4.6,0.0028) (-4.5,0.003) (-4.4,0.0031) (-4.3,0.0028) (-4.2,0.0029) (-4.1,0.0034) (-4,0.0032) (-3.9,0.003) (-3.8,0.0038) (-3.7,0.005) (-3.6,0.003) (-3.5,0.0047) (-3.4,0.005) (-3.3,0.0059) (-3.2,0.0051) (-3.1,0.0048) (-3,0.0064) (-2.9,0.0058) (-2.8,0.0085) (-2.7,0.0055) (-2.6,0.0076) (-2.5,0.008) (-2.4,0.0101) (-2.3,0.0087) (-2.2,0.01) (-2.1,0.0103) (-2,0.0116) (-1.9,0.0131) (-1.8,0.0142) (-1.7,0.0136) (-1.6,0.0149) (-1.5,0.015) (-1.4,0.0236) (-1.3,0.0213) (-1.2,0.0216) (-1.1,0.028) (-1,0.0302) (-0.9,0.0353) (-0.8,0.0429) (-0.7,0.0438) (-0.6,0.0601) (-0.5,0.0717) (-0.4,0.0852) (-0.3,0.1191) (-0.2,0.1824) (-0.1,0.2978) (0,0.4684) (0.1,0.3285) (0.2,0.321) (0.3,0.3855) (0.4,0.4668) (0.5,0.5351) (0.6,0.5924) (0.7,0.5956) (0.8,0.5832) (0.9,0.542) (1,0.4736) (1.1,0.4282) (1.2,0.3925) (1.3,0.3544) (1.4,0.3201) (1.5,0.28) (1.6,0.2476) (1.7,0.2196) (1.8,0.1872) (1.9,0.1618) (2,0.1491) (2.1,0.1209) (2.2,0.0973) (2.3,0.0866) (2.4,0.0709) (2.5,0.0509) (2.6,0.0438) (2.7,0.0326) (2.8,0.0243) (2.9,0.0154) (3,0.0112) (3.1,0.0076) (3.2,0.0052) (3.3,0.0033) (3.4,0.0015) (3.5,0.001) (3.6,0.001) (3.7,0.0004) (3.8,0.0001) (3.9,0.0004) (4,0.0002) (4.1,0.0001) (4.2,0) (4.3,0.0002) (4.4,0.0002) (4.5,0.0001) (4.6,0) (4.7,0.0003) (4.8,0) (4.9,0) (5,0)};
+\addlegendentry{CVaR 85\%}
+\addplot[forget plot,no marks,dashed,color=standDeepA,line width=.55pt] coordinates {(0.6660658344,0) (0.6660658344,0.84896)};
+\addplot[const plot,no marks,color=standDeepB,line width=.9pt] coordinates {(-5,0.0024) (-4.9,0.0017) (-4.8,0.0017) (-4.7,0.0017) (-4.6,0.0025) (-4.5,0.0025) (-4.4,0.0033) (-4.3,0.003) (-4.2,0.0017) (-4.1,0.003) (-4,0.0022) (-3.9,0.0033) (-3.8,0.0032) (-3.7,0.0044) (-3.6,0.0032) (-3.5,0.0048) (-3.4,0.0046) (-3.3,0.0053) (-3.2,0.0058) (-3.1,0.007) (-3,0.0068) (-2.9,0.0076) (-2.8,0.0081) (-2.7,0.0079) (-2.6,0.0086) (-2.5,0.0101) (-2.4,0.0109) (-2.3,0.011) (-2.2,0.0132) (-2.1,0.0154) (-2,0.0157) (-1.9,0.0169) (-1.8,0.0169) (-1.7,0.0187) (-1.6,0.0245) (-1.5,0.0246) (-1.4,0.0288) (-1.3,0.0331) (-1.2,0.0448) (-1.1,0.0438) (-1,0.0612) (-0.9,0.0812) (-0.8,0.1374) (-0.7,0.2477) (-0.6,0.2672) (-0.5,0.2161) (-0.4,0.2149) (-0.3,0.2315) (-0.2,0.294) (-0.1,0.3542) (0,0.4255) (0.1,0.4774) (0.2,0.4756) (0.3,0.4785) (0.4,0.474) (0.5,0.4311) (0.6,0.4034) (0.7,0.3743) (0.8,0.3649) (0.9,0.3429) (1,0.3112) (1.1,0.3031) (1.2,0.2848) (1.3,0.2763) (1.4,0.2449) (1.5,0.2368) (1.6,0.2169) (1.7,0.2012) (1.8,0.1803) (1.9,0.1657) (2,0.1383) (2.1,0.1335) (2.2,0.1092) (2.3,0.0922) (2.4,0.0723) (2.5,0.0587) (2.6,0.0425) (2.7,0.0325) (2.8,0.0221) (2.9,0.0127) (3,0.0068) (3.1,0.0045) (3.2,0.0016) (3.3,0.0011) (3.4,0.0003) (3.5,0) (3.6,0.0002) (3.7,0.0003) (3.8,0.0001) (3.9,0.0001) (4,0.0001) (4.1,0.0001) (4.2,0.0001) (4.3,0) (4.4,0) (4.5,0) (4.6,0) (4.7,0) (4.8,0) (4.9,0) (5,0)};
+\addlegendentry{CVaR 90\%}
+\addplot[forget plot,no marks,dashed,color=standDeepB,line width=.55pt] coordinates {(0.4888806736,0) (0.4888806736,0.84896)};
+\addplot[const plot,no marks,color=standDeepC,line width=.9pt] coordinates {(-5,0.0016) (-4.9,0.0017) (-4.8,0.0014) (-4.7,0.0024) (-4.6,0.002) (-4.5,0.0019) (-4.4,0.0017) (-4.3,0.0025) (-4.2,0.0035) (-4.1,0.0022) (-4,0.0036) (-3.9,0.004) (-3.8,0.0037) (-3.7,0.0052) (-3.6,0.0027) (-3.5,0.0028) (-3.4,0.0047) (-3.3,0.0053) (-3.2,0.0064) (-3.1,0.0069) (-3,0.0059) (-2.9,0.008) (-2.8,0.0085) (-2.7,0.0082) (-2.6,0.0109) (-2.5,0.0116) (-2.4,0.0117) (-2.3,0.0144) (-2.2,0.0159) (-2.1,0.0186) (-2,0.0196) (-1.9,0.0237) (-1.8,0.034) (-1.7,0.0448) (-1.6,0.0601) (-1.5,0.0982) (-1.4,0.1327) (-1.3,0.1154) (-1.2,0.1057) (-1.1,0.1095) (-1,0.1151) (-0.9,0.1332) (-0.8,0.1461) (-0.7,0.1792) (-0.6,0.2078) (-0.5,0.2594) (-0.4,0.3321) (-0.3,0.3516) (-0.2,0.3824) (-0.1,0.382) (0,0.3848) (0.1,0.4009) (0.2,0.3852) (0.3,0.3667) (0.4,0.3506) (0.5,0.3381) (0.6,0.3306) (0.7,0.3303) (0.8,0.2953) (0.9,0.2941) (1,0.2705) (1.1,0.2652) (1.2,0.2574) (1.3,0.2374) (1.4,0.223) (1.5,0.2142) (1.6,0.2068) (1.7,0.1924) (1.8,0.1767) (1.9,0.1619) (2,0.1481) (2.1,0.141) (2.2,0.1233) (2.3,0.1026) (2.4,0.0935) (2.5,0.073) (2.6,0.0581) (2.7,0.0417) (2.8,0.0316) (2.9,0.0191) (3,0.0113) (3.1,0.0046) (3.2,0.0021) (3.3,0.0006) (3.4,0.0005) (3.5,0) (3.6,0.0001) (3.7,0.0001) (3.8,0.0002) (3.9,0.0001) (4,0.0001) (4.1,0) (4.2,0) (4.3,0) (4.4,0) (4.5,0.0001) (4.6,0.0002) (4.7,0) (4.8,0) (4.9,0) (5,0)};
+\addlegendentry{CVaR 95\%}
+\addplot[forget plot,no marks,dashed,color=standDeepC,line width=.55pt] coordinates {(0.388896465,0) (0.388896465,0.84896)};
+\addplot[forget plot,no marks,black,line width=.6pt] coordinates {(0,0) (0,0.84896)};
+\end{axis}
+\begin{axis}[name=standdelta,width=.475\linewidth,height=5.4cm,xmin=-5,xmax=5,ymin=0,ymax=0.84896,xlabel={Terminal net hedge P\&L},grid=major,grid style={gray!15},tick label style={font=\scriptsize},label style={font=\small},title style={font=\small},legend style={font=\scriptsize,draw=none,fill=none,at={(0.02,0.98)},anchor=north west},title={Common delta hedge},at={(standdeep.east)},anchor=west,xshift=.03\linewidth,yticklabels={}]
+\addplot[const plot,no marks,color=standDelta,line width=.9pt] coordinates {(-5,0.0025) (-4.9,0.0025) (-4.8,0.0027) (-4.7,0.0026) (-4.6,0.0029) (-4.5,0.0034) (-4.4,0.0034) (-4.3,0.0042) (-4.2,0.0044) (-4.1,0.0053) (-4,0.0045) (-3.9,0.0053) (-3.8,0.0056) (-3.7,0.0077) (-3.6,0.0078) (-3.5,0.0063) (-3.4,0.0069) (-3.3,0.01) (-3.2,0.008) (-3.1,0.0122) (-3,0.0121) (-2.9,0.0112) (-2.8,0.0126) (-2.7,0.0132) (-2.6,0.0178) (-2.5,0.0153) (-2.4,0.0168) (-2.3,0.0204) (-2.2,0.0199) (-2.1,0.0202) (-2,0.0223) (-1.9,0.0293) (-1.8,0.0265) (-1.7,0.0313) (-1.6,0.0342) (-1.5,0.0381) (-1.4,0.043) (-1.3,0.0472) (-1.2,0.0546) (-1.1,0.0555) (-1,0.065) (-0.9,0.0706) (-0.8,0.0799) (-0.7,0.0831) (-0.6,0.094) (-0.5,0.1056) (-0.4,0.1151) (-0.3,0.1247) (-0.2,0.1453) (-0.1,0.1632) (0,0.1794) (0.1,0.1989) (0.2,0.2274) (0.3,0.2559) (0.4,0.2893) (0.5,0.3382) (0.6,0.3765) (0.7,0.4472) (0.8,0.518) (0.9,0.595) (1,0.6824) (1.1,0.7517) (1.2,0.758) (1.3,0.6915) (1.4,0.6259) (1.5,0.4858) (1.6,0.3591) (1.7,0.2181) (1.8,0.1277) (1.9,0.0698) (2,0.032) (2.1,0.0131) (2.2,0.0072) (2.3,0.0022) (2.4,0.0008) (2.5,0) (2.6,0) (2.7,0) (2.8,0) (2.9,0) (3,0) (3.1,0) (3.2,0) (3.3,0) (3.4,0) (3.5,0) (3.6,0) (3.7,0) (3.8,0) (3.9,0) (4,0) (4.1,0) (4.2,0) (4.3,0) (4.4,0) (4.5,0) (4.6,0) (4.7,0) (4.8,0) (4.9,0) (5,0)};
+\addlegendentry{Delta hedge}
+\addplot[forget plot,no marks,dashed,color=standDelta,line width=.55pt] coordinates {(0.651675992,0) (0.651675992,0.84896)};
+\addplot[forget plot,no marks,black,line width=.6pt] coordinates {(0,0) (0,0.84896)};
+\end{axis}
+\end{tikzpicture}
+% Density=count/(100000*bin width); unchanged net P&L; S0=100 and initial capital 3.16.
+\caption{Standalone short-call hedging profits at their original locations. The black lines mark zero and dashed lines mark sample means. Common bins of width 0.1 use the full-sample denominator.}
+\label{fig:standalone}
+\end{figure}
+
+Zero mean is not a defining property of a hedge evaluated under the physical measure. To distinguish this from pricing, suppose the wealth and predictable trading gains are integrable under the selected measure $\mathbb Q$. Then
+\begin{align*}
+ \mathbb E_{\mathbb Q}[V_{t+1}\mid\mathcal F_t]
+ &=e^{r\Delta t}V_t+\delta_t\bigl(e^{q\Delta t}
+     \mathbb E_{\mathbb Q}[S_{t+1}\mid\mathcal F_t]
+                 -e^{r\Delta t}S_t\bigr)\\
+ &=e^{r\Delta t}V_t+\delta_t\bigl(e^{q\Delta t}
+       S_te^{(r-q)\Delta t}-e^{r\Delta t}S_t\bigr)
+ =e^{r\Delta t}V_t.
+\end{align*}
+Iterating the tower property and using the pricing definition gives
+\begin{align*}
+ \mathbb E_{\mathbb Q}[V_{t+1}]
+ &=\mathbb E_{\mathbb Q}\!\left[\mathbb E_{\mathbb Q}[V_{t+1}\mid\mathcal F_t]\right]
+ =e^{r\Delta t}\mathbb E_{\mathbb Q}[V_t],\\
+ \mathbb E_{\mathbb Q}[V_T]&=e^{r\Delta t}\mathbb E_{\mathbb Q}[V_{T-1}]
+ =\cdots=e^{rT\Delta t}V_0,
+ &C_0&=e^{-rT\Delta t}\mathbb E_{\mathbb Q}[H],\\
+ \mathbb E_{\mathbb Q}[\Pi_T]
+ &=\mathbb E_{\mathbb Q}[V_T]-\mathbb E_{\mathbb Q}[H]
+ =e^{rT\Delta t}(V_0-C_0).
+\end{align*}
+This identity requires integrability and concerns $\mathbb Q$; the histograms use $\mathbb P$. It supplies no zero-centre requirement for these physical samples. Training minimises upper-tail loss rather than imposing a mean constraint.
+
+Under $\mathbb P$, the conditional normal moment instead gives
+\begin{align*}
+ \mathbb E_{\mathbb P}[S_{t+1}\mid\mathcal F_t]
+ &=S_te^\mu\mathbb E[e^{\sqrt{h_t}\varepsilon_{t+1}}]
+ =S_te^{\mu+h_t/2},\\
+ \mathbb E_{\mathbb P}[g_t\mid\mathcal F_t]
+ &=S_t\bigl(e^{q\Delta t+\mu+h_t/2}-e^{r\Delta t}\bigr).
+\end{align*}
+This conditional stock gain is positive for the retained parameters because $\mu+h_t/2>(r-q)\Delta t$. It does not determine the unconditional profit of a hedged call.
+
+The deterministic capital excess relative to the estimated model price is
+\[
+ e^{rT\Delta t}(3.16-2.770068435)=0.391562932.
+\]
+It is common to both hedges and cancels from their difference when positions are fixed. It is not an estimate of their physical expected profit. The fixed-position translation at the lower capital breaches the neural borrowing limit, as shown above. Population centring and normal-approximation coverage also require the hedge-loss moment conditions discussed in this note.
+
 \subsection{Calibration and initial variance}
 I investigate the initial variance and numerical calibration while keeping initial capital 3.16, the 95\% objective, architecture and seeds fixed. The two new policies complete 50 epochs on 400,000 training and 50,000 validation paths. Validation selects epoch 47 for the larger initial state and epoch 50 for the percentage-unit fit. All comparisons use 100,000 test paths with the same innovations as the retained baseline. Each market has its own conditional delta benchmark.
 
@@ -1871,6 +1986,8 @@ python calibration_sensitivity.py --folder sensitivity_retrained
 python calibration_plots.py --folder calibration_sensitivity
 \end{verbatim}
 Recorded inputs, outcomes and diagnostics are in \texttt{calibration\_sensitivity/}. The retained baseline inputs and Panel B records are unchanged.
+
+Run \texttt{python standalone\_distributions.py} to regenerate the standalone distributions and summaries from the saved test outcomes.
 
 \subsection{Versions, seeds and all inputs}
 Recorded numerical versions are NumPy~2.3.5, SciPy~1.18.1, pandas~2.2.3, ARCH~8.0.0, PyTorch~2.5.1 and matplotlib~3.11.2. The financial inputs are $S_0=K=100$, $T=63$, $\dt=1/252$, $r=0.0167$, $q=0.0165$, $a=0.95$, $B=100$, initial capital 3.16 and zero transaction costs. Exact GJR parameters are in Table~\ref{tab:parameters}. Network shape, precision, initialisation, learning rate, Adam settings, batch size and all 50 epochs are specified in Section~6. The shared network has 9,913 parameters; there is no active dropout or regularisation.

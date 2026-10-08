@@ -49,6 +49,31 @@ python panel_b.py train --confidence 90 --folder panel_b_retrained
 python panel_b.py evaluate --folder panel_b_retrained --capital-control --full-range
 ```
 
+## Standalone hedging distributions
+
+I plot the terminal net profit of each hedged short call, **hedge wealth minus option payoff**, on the same 100,000 physical test paths. Initial capital is **3.16** throughout. The distributions retain their original locations.
+
+[Central distributions](standalone_distributions/standalone_central_comparison.png) · [Separate panels](standalone_distributions/standalone_central_panels.png) · [Complete empirical distributions](standalone_distributions/standalone_full_range_ecdf.png) · [Numerical summaries](standalone_distributions/results.csv)
+
+| Hedge | Mean net profit | Median net profit | 5th percentile | 95th percentile | Negative profit |
+|---|---:|---:|---:|---:|---:|
+| Deep 85% | 0.666066 | 0.785888 | −0.770513 | 2.159817 | 13.913% |
+| Deep 90% | 0.488881 | 0.514722 | −0.992383 | 2.167698 | 26.009% |
+| Deep 95% | 0.388896 | 0.399363 | −1.412509 | 2.251163 | 34.652% |
+| Delta | 0.651676 | 0.971850 | −1.406855 | 1.690658 | 17.489% |
+
+All sample means and medians are positive, so none is centred at zero. The complete empirical distributions include the rare left tails. The 95% mean difference is **0.388896 − 0.651676 = −0.262780**, agreeing with Panel B. Loss distributions are the reflections of these profit distributions.
+
+The central plot uses common bins of width 0.1 and the full-sample denominator; 945, 618, 534 and 527 observations fall outside [−5, 5]. No outcome is removed from the summaries. Zero mean is not imposed by physical-measure CVaR training. A zero-mean pricing argument requires the pricing measure, matching initial capital and integrable hedge gains; the research note derives the distinction.
+
+Regenerate the distributions directly from the retained terminal arrays:
+
+```sh
+python standalone_distributions.py
+```
+
+The script checks the payoff, wealth, loss and difference identities, baseline agreement and finiteness before exporting the figures, histogram counts and summaries. The means and estimated sampling variability are empirical diagnostics; population moment qualifications remain applicable.
+
 ## Calibration and initial variance
 
 I tested the observed-residual forecast, a predefined initial state that prices the option near 3.16, and the percentage-unit likelihood fit. Initial capital remains **3.16** in every training and evaluation. The two new 95% policies complete 50 epochs and use validation-selected checkpoints; all test comparisons share the same 100,000 innovations.
